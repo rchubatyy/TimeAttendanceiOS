@@ -1,0 +1,6 @@
+framework module Pods_Time___Attendance_Time___AttendanceUITests {
+  umbrella header "Pods-Time & Attendance-Time & AttendanceUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
