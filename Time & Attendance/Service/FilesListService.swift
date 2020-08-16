@@ -33,6 +33,7 @@ class FilesListService{
                         self.businessFiles = []
                         self.businessFiles.append(BusinessFile(name: name, token: token))
                     }
+                    self.saveFiles()
                     completion(true, "")
                 default:
                     completion(false, data["dbtErrorMessage"].string ?? "Database error")
@@ -59,7 +60,8 @@ class FilesListService{
             }
         }
         else {
-            completion(false, "Failed to retrive business files")
+            self.retrieveSavedFiles()
+            completion(false, "Failed to retrive company informations. Try it later")
             }
         }
     }
@@ -70,6 +72,28 @@ class FilesListService{
     
     func getDBToken() -> String{
         return UserDefaults.standard.string(forKey: "dbToken") ?? ""
+    }
+    
+    func saveFiles(){
+        var names: [String] = []
+        var tokens: [String] = []
+        for file in businessFiles{
+            names.append(file.name!)
+            tokens.append(file.token!)
+        }
+        UserDefaults.standard.set(names, forKey: "businessFileNames")
+        UserDefaults.standard.set(tokens, forKey: "businessFileTokens")
+    }
+    
+    func retrieveSavedFiles(){
+        var files: [BusinessFile] = []
+        let names = UserDefaults.standard.array(forKey: "businessFileNames") as? [String] ?? []
+        let tokens = UserDefaults.standard.array(forKey: "businessFileTokens") as? [String] ?? []
+        for i in 0..<names.count{
+            let file = BusinessFile(name: names[i], token: tokens[i])
+            files.append(file)
+        }
+        self.businessFiles = files
     }
     
     }
