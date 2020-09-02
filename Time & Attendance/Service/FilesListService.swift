@@ -27,10 +27,10 @@ class FilesListService{
                 switch(data["dbtSuccess"]){
                 case "Y":
                     let results = data["dbtBusinessFiles"].arrayValue
+                    self.businessFiles = []
                     for result in results{
                         let name = result["dbtBusinessName"].string!
                         let token = result["dbtDBToken"].string!
-                        self.businessFiles = []
                         self.businessFiles.append(BusinessFile(name: name, token: token))
                     }
                     self.saveFiles()
@@ -61,7 +61,7 @@ class FilesListService{
         }
         else {
             self.retrieveSavedFiles()
-            completion(false, "Failed to retrive company informations. Try it later")
+            completion(false, "Failed to retrive company informations. Try it later.")
             }
         }
     }
