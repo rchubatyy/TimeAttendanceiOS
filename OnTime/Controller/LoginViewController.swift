@@ -62,8 +62,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func toDBScreen(){
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "BusinessFileVC") as! BusinessFileViewController
-        self.navigationController?.pushViewController(vc, animated: false)
+        performSegue(withIdentifier: "LOG_IN", sender: nil)
     }
     
     

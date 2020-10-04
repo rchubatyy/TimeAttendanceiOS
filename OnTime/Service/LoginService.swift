@@ -13,12 +13,16 @@ class LoginService{
 
 static let instance = LoginService()
 
-public private(set) var loggedIn: Bool
+    public var loggedIn: Bool{
+        get{
+            return UserDefaults.standard.bool(forKey: "loggedIn")
+        }
+    }
 public private(set) var userToken: String
 
 
     private init(){
-        loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
+        //loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
         userToken = UserDefaults.standard.string(forKey: "userToken") ?? ""
     }
     
@@ -35,7 +39,7 @@ public private(set) var userToken: String
                     UserDefaults.standard.set(userToken, forKey: "userToken")
                     UserDefaults.standard.set("\(data["usrFirstName"]) \(data["usrLastName"])",forKey: "name")
                     UserDefaults.standard.set(email, forKey: "email")
-                    self.loggedIn = true
+                    //self.loggedIn = true
                     self.userToken = userToken
                     completion(true, "\(data["usrFirstName"]) \(data["usrLastName"])" )
                 default:

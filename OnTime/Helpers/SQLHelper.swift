@@ -109,6 +109,7 @@ public class SQLHelper{
         WHERE usrToken = '\(FilesListService.instance.getUserToken())'
         AND dbToken = '\(FilesListService.instance.getDBToken())'
         AND RecordTime < DATETIME('now', '-\(days) days', 'localtime')
+        AND resultId != '' AND resultId IS NOT NULL
         """
         if sqlite3_exec(db, deleteStatementString, nil, nil, nil) == SQLITE_OK {
                 completion(true)
