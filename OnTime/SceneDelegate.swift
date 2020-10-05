@@ -22,27 +22,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else {
                 return
             }
-        let window = UIWindow(windowScene: windowScene)
-        window.overrideUserInterfaceStyle = .light
+        self.window?.overrideUserInterfaceStyle = .light
         
         if (LoginService.instance.loggedIn){
-            print ("logged in")
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            
+            let window = UIWindow(windowScene: windowScene)
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)            
             let checkInVC = FilesListService.instance.dbSelected ?
                 storyboard.instantiateViewController(withIdentifier: "CheckInVC") as! CheckInViewController :
                 storyboard.instantiateViewController(withIdentifier: "BusinessFileVC") as! BusinessFileViewController
             let nav = UINavigationController(rootViewController: checkInVC)
             nav.isNavigationBarHidden = true
             self.window = window
+            self.window?.overrideUserInterfaceStyle = .light
             self.window?.rootViewController = nav
             self.window?.makeKeyAndVisible()
-            
         }
-        else{
-            print ("not logged in")
-        }
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

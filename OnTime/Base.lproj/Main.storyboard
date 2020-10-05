@@ -365,11 +365,11 @@
                                 <rect key="frame" x="15" y="673" width="345" height="41"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVr-lW-0tJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="89" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="129" height="41"/>
                                         <color key="backgroundColor" red="0.47843137250000001" green="0.71764705880000002" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25.5"/>
                                         <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                                        <state key="normal" title="History">
+                                        <state key="normal" title="My History">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -379,7 +379,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="99D-jT-w21" kind="show" id="IRD-Sw-RU5"/>
+                                            <segue destination="99D-jT-w21" kind="presentation" id="IRD-Sw-RU5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ce-Cd-0R9">
@@ -397,7 +397,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="TzD-hc-uLg" kind="show" id="H5T-Oi-l07"/>
+                                            <segue destination="TzD-hc-uLg" kind="presentation" id="H5T-Oi-l07"/>
                                         </connections>
                                     </button>
                                 </subviews>
