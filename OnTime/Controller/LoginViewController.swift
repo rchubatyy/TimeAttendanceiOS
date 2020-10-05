@@ -7,26 +7,27 @@
 
 import UIKit
 import Alamofire
+import CoreLocation
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordLink: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var learnMoreAndRegisterLink: UILabel!
+    let locationManager = CLLocationManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        if LoginService.instance.loggedIn{
-            //toDBScreen()
-        }
         emailField.delegate = self
         passwordField.delegate = self
         errorMessage.text = ""
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        locationManager.requestWhenInUseAuthorization()
     }
     
 
