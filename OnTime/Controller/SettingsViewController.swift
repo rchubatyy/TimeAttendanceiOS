@@ -75,7 +75,7 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func goBack(){
-        self.navigationController?.popViewController(animated: false)
+        dismiss(animated: true)
     }
 
 
