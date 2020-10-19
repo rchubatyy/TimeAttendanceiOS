@@ -52,7 +52,7 @@ class FilesListService{
             switch(data["cmpSuccess"]){
             case "Y":
                 let companyInfoHTML = data["cmpInfoMessage"].string ?? "<p>No info yet.</p>"
-                let companyInfo = companyInfoHTML.htmlToString
+                let companyInfo = companyInfoHTML.htmlToString.replacingOccurrences(of: "\n", with: "")
                 completion(true, companyInfo)
             default:
                 completion(false, data["cmpErrorMessage"].string ?? "Error")

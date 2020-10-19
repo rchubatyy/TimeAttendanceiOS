@@ -14,12 +14,16 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var yourLogin: UILabel!
     @IBOutlet weak var registeredWith: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var websiteLink: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         userName.text = UserDefaults.standard.string(forKey: "name")
         yourLogin.text = "Your login: " + (UserDefaults.standard.string(forKey: "email") ?? "none")
         registeredWith.text = "Registered with: \n" + (UserDefaults.standard.string(forKey: "businessFileName") ?? "none")
         errorMessage.text = ""
+        let tap = UITapGestureRecognizer(target: self, action: #selector(viewWebsite))
+        websiteLink.addGestureRecognizer(tap)
         // Do any additional setup after loading the view.
     }
     
@@ -76,6 +80,12 @@ class SettingsViewController: UIViewController {
     
     @IBAction func goBack(){
         dismiss(animated: true)
+    }
+    
+    @objc func viewWebsite(sender: UITapGestureRecognizer){
+        if let url = URL(string: "https://know.olivs.app/time-attendance/mobile-app/") {
+            UIApplication.shared.open(url)
+        }
     }
 
 

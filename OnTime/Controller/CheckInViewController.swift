@@ -17,6 +17,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var areWeReadyMessage: UILabel!
     @IBOutlet var checkInButtons: [UIButton]!
     @IBOutlet weak var resultsMessage: UILabel!
+    var isLocationRequested: Bool = false
     let locationManager = CLLocationManager()
     var lastLoc : CLLocationCoordinate2D?
 
@@ -68,7 +69,10 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !isLocationRequested{
         showCanGetLocation()
+        }
+        isLocationRequested = true
         lastLoc = locationManager.location?.coordinate
         locationManager.stopUpdatingLocation()
     }
@@ -88,26 +92,26 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         resultsMessage.text = "Uploading activity..."
         locationManager.startUpdatingLocation()
         let states: [Int: ActivityType] = [1: .CHECKIN, 2: .BREAKSTART, 3: .BREAKEND, 4: .CHECKOUT]
+        setButtonsEnabled(false)
         CheckInService.instance.registerUserActivity(loc: lastLoc!, activityType: states[sender.tag ]!){(success, message) in
-            let alertController = UIAlertController(title: "OnTime", message:
-                    message, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Go back", style: .default))
             
                 SQLHelper.instance.insert(record: CheckInService.instance.checkInInfo)
 
             if !success {
-                let howToSync = UIAlertAction(title: "How to sync?", style: .default) { _ in
-                    if let url = URL(string: "https://know.olivs.app/time-attendance/mobile-app/how-to-sync-your-activities-with-cloud") {
-                        UIApplication.shared.open(url)
-                    }
-                }
-                alertController.addAction(howToSync)
+                let alertController = UIAlertController(title: "Could not connect to service, but your activity is saved on your phone. You need to sync the activity later.", message:
+                        "To do this, go to\nSettings > Sync all activity.", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alertController, animated: true)
                 self.resultsMessage.text = "Failed to upload data."
             }
             else{
                 self.resultsMessage.text = message
+               
+                
             }
-                self.present(alertController, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.setButtonsEnabled(true)
+            }
  
         }
     }
@@ -116,6 +120,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         for button in checkInButtons{
             button.backgroundColor = status ? BUTTON_COLOR : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
             button.isEnabled = status
+            button.isUserInteractionEnabled = status
         }
     }
     

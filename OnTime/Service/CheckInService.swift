@@ -65,6 +65,10 @@ class CheckInService{
     }
     
     func syncUserActivity(checkInInfo: CheckInInfo, completion: @escaping (Bool, String) -> ()){
+        var request = URLRequest(url: URL(string: REGISTER_USER_ACTIVITY)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
         var body: [String: Any] = [:]
         body["UserToken"] = FilesListService.instance.getUserToken()
         body["DBToken"] = FilesListService.instance.getDBToken()
@@ -75,7 +79,8 @@ class CheckInService{
         body["isLiveDataOrSync"] = "S"
         body["OSVersion"] = getIOSVersion()
         body["PhoneModel"] = getIPhoneModel()
-        AF.request(REGISTER_USER_ACTIVITY, method: .post, parameters: body).responseJSON{response in
+        request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
+        AF.request(request as URLRequestConvertible).responseJSON{response in
             if (response.error == nil){
                 let data = JSON(response.value!)
                 switch(data["acdSuccess"]){

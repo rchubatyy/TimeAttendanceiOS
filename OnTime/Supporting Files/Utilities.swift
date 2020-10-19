@@ -93,9 +93,9 @@ public extension UIDevice {
             "iPhone12,5" : .iPhone11ProMax,
             "iPhone12,8" : .iPhoneSE2,
             "iPhone13,1" : .iPhone12Mini,
-            "iPhone13,3" : .iPhone12,
-            "iPhone13,5" : .iPhone12Pro,
-            "iPhone13,7" : .iPhone12ProMax
+            "iPhone13,2" : .iPhone12,
+            "iPhone13,3" : .iPhone12Pro,
+            "iPhone13,4" : .iPhone12ProMax
     ]
 
         if let model = modelMap[String.init(validatingUTF8: modelCode!)!] {
