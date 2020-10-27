@@ -532,7 +532,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visit our website &amp; access tutorials" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="efc-5R-x8L">
-                                <rect key="frame" x="10" y="504" width="300" height="24"/>
+                                <rect key="frame" x="10" y="455" width="300" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" systemColor="linkColor"/>
                                 <nil key="highlightedColor"/>
@@ -543,7 +543,7 @@
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7V-S1-YYT">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7V-S1-YYT">
                                 <rect key="frame" x="5" y="25" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="8Mm-5o-zD6"/>
@@ -551,7 +551,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" image="xmark.circle" catalog="system"/>
+                                <state key="normal" image="xmark.circle"/>
                                 <connections>
                                     <action selector="goBack" destination="TzD-hc-uLg" eventType="touchUpInside" id="x3P-lS-hDl"/>
                                 </connections>
@@ -560,7 +560,7 @@
                         <viewLayoutGuide key="safeArea" id="meM-ar-brG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="n7V-S1-YYT" firstAttribute="top" secondItem="J3B-wk-aMD" secondAttribute="top" constant="25" id="AZO-Kw-2Dx"/>
+                            <constraint firstItem="n7V-S1-YYT" firstAttribute="top" secondItem="meM-ar-brG" secondAttribute="top" constant="25" id="AZO-Kw-2Dx"/>
                             <constraint firstItem="meM-ar-brG" firstAttribute="trailing" secondItem="efc-5R-x8L" secondAttribute="trailing" constant="10" id="BhQ-Sn-SdL"/>
                             <constraint firstItem="meM-ar-brG" firstAttribute="trailing" secondItem="Sxk-49-lWY" secondAttribute="trailing" constant="35" id="EUq-kO-s4q"/>
                             <constraint firstItem="RSq-jh-i7K" firstAttribute="top" secondItem="gKU-o3-WW6" secondAttribute="bottom" constant="10" id="GjH-qV-I9F"/>
@@ -689,7 +689,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iLb-VE-xRs">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iLb-VE-xRs">
                                 <rect key="frame" x="5" y="25" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="eKy-Vx-SeH"/>
@@ -697,7 +697,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="tintColor" systemColor="labelColor"/>
-                                <state key="normal" image="xmark.circle" catalog="system"/>
+                                <state key="normal" image="xmark.circle"/>
                                 <connections>
                                     <action selector="goBack" destination="99D-jT-w21" eventType="touchUpInside" id="7DO-tZ-pg3"/>
                                 </connections>
@@ -738,11 +738,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="H5T-Oi-l07"/>
+        <segue reference="C2x-Jm-1Tf"/>
         <segue reference="rbi-it-5cg"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="xmark.circle" catalog="system" width="128" height="121"/>
+        <image name="xmark.circle" width="900" height="900"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

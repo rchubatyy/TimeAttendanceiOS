@@ -15,6 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if #available(iOS 13.0, *) {
+                    // In iOS 13 setup is done in SceneDelegate
+                } else {
+                    SQLHelper.instance.openDatabase()
+                    
+                    if (LoginService.instance.loggedIn){
+                        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                        let checkInVC = FilesListService.instance.dbSelected ?
+                            storyboard.instantiateViewController(withIdentifier: "CheckInVC") as! CheckInViewController :
+                            storyboard.instantiateViewController(withIdentifier: "BusinessFileVC") as! BusinessFileViewController
+                        let nav = UINavigationController(rootViewController: checkInVC)
+                        nav.isNavigationBarHidden = true
+                        self.window?.rootViewController = nav
+                        self.window?.makeKeyAndVisible()
+                    }
+                }
         return true
     }
 

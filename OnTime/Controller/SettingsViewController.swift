@@ -54,8 +54,7 @@ class SettingsViewController: UIViewController {
     }
     
     private func showViewController(isLogin: Bool){
-            let delegate = self.view.window?.windowScene?.delegate as? SceneDelegate
-            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         var vc: UIViewController
         if !isLogin{
             vc = storyboard.instantiateViewController(withIdentifier: "BusinessFileVC") as!
@@ -67,9 +66,19 @@ class SettingsViewController: UIViewController {
         }
             let nav = UINavigationController(rootViewController: vc)
             nav.isNavigationBarHidden = true
+        if #available(iOS 13.0, *) {
+            let delegate = self.view.window?.windowScene?.delegate as? SceneDelegate
+        
             delegate?.window?.overrideUserInterfaceStyle = .light
             delegate?.window?.rootViewController = nav
             delegate?.window?.makeKeyAndVisible()
+        }
+        else{
+            let delegate = UIApplication.shared.delegate as? AppDelegate
+            delegate?.window?.rootViewController = nav
+            delegate?.window?.makeKeyAndVisible()
+        }
+        
     }
     
     private func removeBusinessFile(){
