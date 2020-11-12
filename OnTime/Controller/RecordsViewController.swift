@@ -32,6 +32,7 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         recordsTable.delegate = self
         recordsTable.dataSource = self
         recordsTable.register(UITableViewCell.self, forCellReuseIdentifier: "record")
+        recordsTable.backgroundColor = BACKGROUND_COLOR
 
         // Do any additional setup after loading the view.
     }
@@ -65,11 +66,12 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "record", for: indexPath)
         cell.selectionStyle = .none
+        cell.backgroundColor = BACKGROUND_COLOR
         if self.records[indexPath.row].resultId == ""{
             cell.textLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
         }
         else{
-            cell.textLabel?.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            cell.textLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
         cell.textLabel?.font = cell.textLabel?.font.withSize(18)
         cell.textLabel?.text = "\(self.records[indexPath.row].time!) | \(self.records[indexPath.row].checkInState!.rawValue)"

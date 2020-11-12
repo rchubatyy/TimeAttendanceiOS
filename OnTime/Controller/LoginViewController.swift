@@ -44,7 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     }
 
     @IBAction func loginButtonPressed(_ sender: Any) {
-        errorMessage.textColor = #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1)
+        errorMessage.textColor = #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1)
         errorMessage.text = "Logging in..."
         if let email = emailField.text, let password = passwordField.text{
             LoginService.instance.login(withEmail: email, andPassword: password){(success, message) in
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                     self.toDBScreen()
                 }
                 else {
-                    self.errorMessage.textColor =  #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+                    self.errorMessage.textColor =  #colorLiteral(red: 1, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
                     self.errorMessage.text = message
                 }
             }

@@ -22,7 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else {
                 return
             }
-        self.window?.overrideUserInterfaceStyle = .light
         
         if (LoginService.instance.loggedIn){
             let window = UIWindow(windowScene: windowScene)
@@ -33,10 +32,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let nav = UINavigationController(rootViewController: checkInVC)
             nav.isNavigationBarHidden = true
             self.window = window
-            self.window?.overrideUserInterfaceStyle = .light
+            self.window?.overrideUserInterfaceStyle = .dark
             self.window?.rootViewController = nav
             self.window?.makeKeyAndVisible()
         }
+        
+        self.window?.overrideUserInterfaceStyle = .dark
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -44,7 +44,11 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "file", for: indexPath)
-        cell.textLabel?.font = cell.textLabel?.font.withSize(22)
+        cell.backgroundColor = BACKGROUND_COLOR
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = BUTTON_COLOR
+        cell.selectedBackgroundView = backgroundView
+        cell.textLabel?.font = cell.textLabel?.font.withSize(20)
         cell.textLabel?.text = self.service.businessFiles[indexPath.row].name!
         return cell
     }

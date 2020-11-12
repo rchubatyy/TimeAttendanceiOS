@@ -118,7 +118,11 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     func setButtonsEnabled(_ status: Bool){
         for button in checkInButtons{
-            button.backgroundColor = status ? BUTTON_COLOR : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            button.backgroundColor = status ? (button.tag > 1 && button.tag < 4 ? #colorLiteral(red: 0.2760762572, green: 0.3335207105, blue: 0.4444260597, alpha: 1) : BUTTON_COLOR) : #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            if status && button.tag > 1 && button.tag < 4{
+                button.layer.borderColor = BUTTON_COLOR.cgColor
+                button.layer.borderWidth = 1
+            }
             button.isEnabled = status
             button.isUserInteractionEnabled = status
         }
@@ -132,13 +136,13 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     private func showCanGetLocation(){
         setButtonsEnabled(true)
-        areWeReadyMessage.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        areWeReadyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         areWeReadyMessage.text = "Location is available."
     }
     
     
     private func showCompanyInfo(){
-        self.companyMessage.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.companyMessage.text = "Loading info..."
     FilesListService.instance.getCompanyInformation(){ (success, message) in
         if !success{

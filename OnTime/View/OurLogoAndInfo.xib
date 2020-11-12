@@ -2,7 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,8 +19,9 @@
             <rect key="frame" x="0.0" y="0.0" width="387" height="164"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="primary_logo_rgb" translatesAutoresizingMaskIntoConstraints="NO" id="Uwh-lG-XXr">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="primary-logo-semi-reversed_cmyk" translatesAutoresizingMaskIntoConstraints="NO" id="Uwh-lG-XXr">
                     <rect key="frame" x="0.0" y="0.0" width="387" height="164"/>
+                    <color key="backgroundColor" red="0.28344964979999998" green="0.33170458670000003" blue="0.4392324984" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </imageView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -35,7 +37,7 @@
         </view>
     </objects>
     <resources>
-        <image name="primary_logo_rgb" width="2000" height="741"/>
+        <image name="primary-logo-semi-reversed_cmyk" width="452" height="168"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

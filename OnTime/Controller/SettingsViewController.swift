@@ -42,10 +42,10 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func syncPressed(_ sender: Any) {
-        errorMessage.textColor = #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1)
+        errorMessage.textColor = #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1)
         errorMessage.text = "Syncing..."
         SQLHelper.instance.sync(){(success, message) in
-            self.errorMessage.textColor = success ? #colorLiteral(red: 0.03921568627, green: 0.5176470588, blue: 1, alpha: 1) : #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+            self.errorMessage.textColor = success ? #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1) : #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
             self.errorMessage.text = message
             DispatchQueue.main.asyncAfter(deadline: .now()+2){
                 self.errorMessage.text = ""
@@ -72,11 +72,13 @@ class SettingsViewController: UIViewController {
             delegate?.window?.overrideUserInterfaceStyle = .light
             delegate?.window?.rootViewController = nav
             delegate?.window?.makeKeyAndVisible()
+            delegate?.window?.overrideUserInterfaceStyle = .dark
         }
         else{
             let delegate = UIApplication.shared.delegate as? AppDelegate
             delegate?.window?.rootViewController = nav
             delegate?.window?.makeKeyAndVisible()
+            
         }
         
     }
