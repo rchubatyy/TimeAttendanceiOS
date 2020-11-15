@@ -39,7 +39,6 @@ public private(set) var userToken: String
                     UserDefaults.standard.set(userToken, forKey: "userToken")
                     UserDefaults.standard.set("\(data["usrFirstName"]) \(data["usrLastName"])",forKey: "name")
                     UserDefaults.standard.set(email, forKey: "email")
-                    //self.loggedIn = true
                     self.userToken = userToken
                     completion(true, "\(data["usrFirstName"]) \(data["usrLastName"])" )
                 default:

@@ -10,12 +10,16 @@ import Alamofire
 import CoreLocation
 
 class LoginViewController: UIViewController, UITextFieldDelegate{
+    @IBOutlet weak var logo: OurLogoAndInfo!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordLink: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var learnMoreAndRegisterLink: UILabel!
+    @IBOutlet weak var loginStackView: UIStackView!
+    @IBOutlet weak var logoSize: NSLayoutConstraint!
+    @IBOutlet weak var loginPosition: NSLayoutConstraint!
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -27,7 +31,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         locationManager.requestWhenInUseAuthorization()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
 
@@ -62,6 +79,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         }
     }
     
+    @objc func keyboardWillAppear(notification: NSNotification){
+        if let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height{
+            if  loginPosition.constant == 0{
+            let startPos = loginStackView.frame.minY
+            let offset = keyboardHeight - (UIScreen.main.bounds.height - loginStackView.frame.maxY) + 10
+            loginPosition.constant -= offset
+            if startPos - offset < logo.frame.maxY {
+            resizeLogo(to: 0.04)
+        }
+            }
+        }
+    }
+    
+    @objc func keyboardWillDisappear(notification: NSNotification){
+        if loginPosition.constant != 0{
+        loginPosition.constant = 0
+        resizeLogo(to: 0.08)
+        }
+    }
+    
     func toDBScreen(){
         performSegue(withIdentifier: "LOG_IN", sender: nil)
     }
@@ -71,8 +108,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         view.endEditing(true)
     }
     
-    
-    
+    func resizeLogo(to size: CGFloat){
+        let newConstraint = logoSize.constraintWithMultiplier(size)
+        view.removeConstraint(logoSize)
+        view.addConstraint(newConstraint)
+        view.layoutIfNeeded()
+        logoSize = newConstraint
+        }
     
     
 }
+
+

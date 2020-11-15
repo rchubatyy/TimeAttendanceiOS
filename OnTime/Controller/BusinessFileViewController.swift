@@ -24,6 +24,7 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
         okButton.isEnabled = false
         fileList.delegate = self
         fileList.dataSource = self
+        fileList.tableFooterView = UIView()
         fileList.register(UITableViewCell.self, forCellReuseIdentifier: "file")
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)

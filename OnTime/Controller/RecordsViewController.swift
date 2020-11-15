@@ -31,6 +31,7 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         //records = SQLHelper.instance.getRecords(unsyncedOnly: false)
         recordsTable.delegate = self
         recordsTable.dataSource = self
+        recordsTable.tableFooterView = UIView()
         recordsTable.register(UITableViewCell.self, forCellReuseIdentifier: "record")
         recordsTable.backgroundColor = BACKGROUND_COLOR
 
