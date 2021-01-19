@@ -44,11 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-    }
-    
-
-    
+   
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.textContentType == UITextContentType.emailAddress{
         passwordField.becomeFirstResponder()
@@ -72,7 +68,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
                     self.toDBScreen()
                 }
                 else {
-                    self.errorMessage.textColor =  #colorLiteral(red: 1, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+                    self.errorMessage.textColor =  #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
                     self.errorMessage.text = message
                 }
             }

@@ -24,7 +24,6 @@ class SettingsViewController: UIViewController {
         errorMessage.text = ""
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewWebsite))
         websiteLink.addGestureRecognizer(tap)
-        // Do any additional setup after loading the view.
     }
     
     
@@ -45,7 +44,7 @@ class SettingsViewController: UIViewController {
         errorMessage.textColor = #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1)
         errorMessage.text = "Syncing..."
         SQLHelper.instance.sync(){(success, message) in
-            self.errorMessage.textColor = success ? #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1) : #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+            self.errorMessage.textColor = success ? #colorLiteral(red: 0, green: 0.6249343753, blue: 1, alpha: 1) : #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
             self.errorMessage.text = message
             DispatchQueue.main.asyncAfter(deadline: .now()+2){
                 self.errorMessage.text = ""

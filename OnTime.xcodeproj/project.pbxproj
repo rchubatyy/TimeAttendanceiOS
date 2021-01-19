@@ -15,6 +15,7 @@
 		30875BA4251E61B5001C0F9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30875BA2251E61B5001C0F9E /* LaunchScreen.storyboard */; };
 		30875BAF251E61B6001C0F9E /* OnTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875BAE251E61B6001C0F9E /* OnTimeTests.swift */; };
 		30875BBA251E61B6001C0F9E /* OnTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875BB9251E61B6001C0F9E /* OnTimeUITests.swift */; };
+		30D4CEAC25AF4D750059D5F7 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */; };
 		30E03639251E62CB00ECD58A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E03638251E62BE00ECD58A /* libsqlite3.tbd */; };
 		30E03644251E6BB200ECD58A /* SQLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03643251E6BB200ECD58A /* SQLHelper.swift */; };
 		30E0364C251E6BEE00ECD58A /* CheckInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0364B251E6BEE00ECD58A /* CheckInInfo.swift */; };
@@ -23,7 +24,6 @@
 		30E0365B251E6CDF00ECD58A /* CheckInService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0365A251E6CDF00ECD58A /* CheckInService.swift */; };
 		30E03660251E6D1E00ECD58A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0365F251E6D1D00ECD58A /* Constants.swift */; };
 		30E03665251E6F5A00ECD58A /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03664251E6F5A00ECD58A /* Utilities.swift */; };
-		30E03676251E70AE00ECD58A /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03675251E70AE00ECD58A /* SplashScreenViewController.swift */; };
 		30E0367C251E717100ECD58A /* OurLogoAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0367B251E717100ECD58A /* OurLogoAndInfo.swift */; };
 		30E03684251E720000ECD58A /* OurLogoAndInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30E03683251E720000ECD58A /* OurLogoAndInfo.xib */; };
 		30E03689251E722900ECD58A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03688251E722900ECD58A /* LoginViewController.swift */; };
@@ -69,6 +69,7 @@
 		30875BB5251E61B6001C0F9E /* OnTimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnTimeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30875BB9251E61B6001C0F9E /* OnTimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTimeUITests.swift; sourceTree = "<group>"; };
 		30875BBB251E61B6001C0F9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
 		30E03638251E62BE00ECD58A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		30E03643251E6BB200ECD58A /* SQLHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLHelper.swift; sourceTree = "<group>"; };
 		30E0364B251E6BEE00ECD58A /* CheckInInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInInfo.swift; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		30E0365A251E6CDF00ECD58A /* CheckInService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInService.swift; sourceTree = "<group>"; };
 		30E0365F251E6D1D00ECD58A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		30E03664251E6F5A00ECD58A /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		30E03675251E70AE00ECD58A /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		30E0367B251E717100ECD58A /* OurLogoAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurLogoAndInfo.swift; sourceTree = "<group>"; };
 		30E03683251E720000ECD58A /* OurLogoAndInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OurLogoAndInfo.xib; sourceTree = "<group>"; };
 		30E03688251E722900ECD58A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -210,6 +210,7 @@
 				30E03683251E720000ECD58A /* OurLogoAndInfo.xib */,
 				30E0367B251E717100ECD58A /* OurLogoAndInfo.swift */,
 				302454492557D4A50022294E /* ColorlessButton.swift */,
+				30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -222,7 +223,6 @@
 				30E0368E251E729200ECD58A /* CheckInViewController.swift */,
 				30E0368F251E729200ECD58A /* RecordsViewController.swift */,
 				30E0368D251E729200ECD58A /* SettingsViewController.swift */,
-				30E03675251E70AE00ECD58A /* SplashScreenViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -510,6 +510,7 @@
 				30875B98251E61B3001C0F9E /* AppDelegate.swift in Sources */,
 				30E03651251E6CAB00ECD58A /* FilesListService.swift in Sources */,
 				30E03644251E6BB200ECD58A /* SQLHelper.swift in Sources */,
+				30D4CEAC25AF4D750059D5F7 /* LoginTextField.swift in Sources */,
 				30E03692251E729200ECD58A /* CheckInViewController.swift in Sources */,
 				30E0365B251E6CDF00ECD58A /* CheckInService.swift in Sources */,
 				3024544A2557D4A60022294E /* ColorlessButton.swift in Sources */,
@@ -518,7 +519,6 @@
 				30E03665251E6F5A00ECD58A /* Utilities.swift in Sources */,
 				30E03691251E729200ECD58A /* SettingsViewController.swift in Sources */,
 				30E03694251E729200ECD58A /* BusinessFileViewController.swift in Sources */,
-				30E03676251E70AE00ECD58A /* SplashScreenViewController.swift in Sources */,
 				30E03660251E6D1E00ECD58A /* Constants.swift in Sources */,
 				30E03693251E729200ECD58A /* RecordsViewController.swift in Sources */,
 			);
@@ -697,6 +697,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.3.0;
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
@@ -707,6 +709,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.olivs.OnTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -718,6 +721,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.1.3.0;
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
@@ -728,6 +733,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.olivs.OnTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

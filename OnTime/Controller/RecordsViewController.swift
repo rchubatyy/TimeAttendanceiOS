@@ -10,8 +10,6 @@ import UIKit
 
 class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    
-
 
     @IBOutlet weak var daysField: UITextField!
     @IBOutlet weak var recordsTable: UITableView!
@@ -28,14 +26,11 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
             options.append(i)
         }
         setupPicker()
-        //records = SQLHelper.instance.getRecords(unsyncedOnly: false)
         recordsTable.delegate = self
         recordsTable.dataSource = self
         recordsTable.tableFooterView = UIView()
         recordsTable.register(UITableViewCell.self, forCellReuseIdentifier: "record")
         recordsTable.backgroundColor = BACKGROUND_COLOR
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,7 +64,7 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         cell.selectionStyle = .none
         cell.backgroundColor = BACKGROUND_COLOR
         if self.records[indexPath.row].resultId == ""{
-            cell.textLabel?.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            cell.textLabel?.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         }
         else{
             cell.textLabel?.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)

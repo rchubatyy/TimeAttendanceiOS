@@ -17,16 +17,12 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var okButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserDefaults.standard.bool(forKey: "dbSelected"){
-            //toCheckInScreen()
-        }
         okButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         okButton.isEnabled = false
         fileList.delegate = self
         fileList.dataSource = self
         fileList.tableFooterView = UIView()
         fileList.register(UITableViewCell.self, forCellReuseIdentifier: "file")
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         fileList.addSubview(refreshControl)
         refresh(self)
@@ -85,13 +81,12 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
         FilesListService.instance.getBusinessFilesList(){(success, error) in
             if success{
                 self.fileList.reloadData()
+                self.okButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+                self.okButton.isEnabled = false
             }
             else{
                 if UserDefaults.standard.bool(forKey: "dbSelected"){
                     self.toCheckInScreen()
-                }
-                else {
-                //self.navigationController?.popViewController(animated: false)
                 }
             }
 

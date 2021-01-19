@@ -27,10 +27,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         setButtonsEnabled(false)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        //locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
         locationManager.startUpdatingLocation()
-        //locationManager.stopUpdatingLocation()
-        // Do any additional setup after loading the view.
     }
     
     
@@ -40,32 +37,10 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        //print("View will disappear")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //print("View did appear")
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        //print("View did disappear")
-    }
-    
-    override func viewWillLayoutSubviews() {
-        //print("View will layout subviews")
-    }
-    
-    override func viewDidLayoutSubviews() {
-        //print("View did layout subviews")
-    }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        setButtonsEnabled(false)
-        areWeReadyMessage.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        areWeReadyMessage.text = "Location is not available."
+        showCannotGetLocation()
     }
-    
     
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -77,14 +52,14 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status != .authorizedAlways || status != .authorizedWhenInUse{
+        if status != .authorizedAlways && status != .authorizedWhenInUse{
         showCannotGetLocation()
         }
         else{
         showCanGetLocation()
         }
-        
     }
     
 
@@ -94,9 +69,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         let states: [Int: ActivityType] = [1: .CHECKIN, 2: .BREAKSTART, 3: .BREAKEND, 4: .CHECKOUT]
         setButtonsEnabled(false)
         CheckInService.instance.registerUserActivity(loc: lastLoc!, activityType: states[sender.tag ]!){(success, message) in
-            
                 SQLHelper.instance.insert(record: CheckInService.instance.checkInInfo)
-
             if !success {
                 let alertController = UIAlertController(title: "Could not connect to service, but your activity is saved on your phone. You need to sync the activity later.", message:
                         "To do this, go to\nSettings > Sync all activity.", preferredStyle: .alert)
@@ -106,13 +79,10 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
             }
             else{
                 self.resultsMessage.text = message
-               
-                
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.setButtonsEnabled(true)
-            }
- 
+            } 
         }
     }
     
@@ -130,14 +100,24 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     private func showCannotGetLocation(){
         setButtonsEnabled(false)
-        areWeReadyMessage.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
-        areWeReadyMessage.text = "Sorry, you can't check in because location is not available."
+        areWeReadyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+        areWeReadyMessage.text = "Location is not available."
     }
     
     private func showCanGetLocation(){
         setButtonsEnabled(true)
         areWeReadyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        areWeReadyMessage.text = "Location is available."
+        if #available(iOS 14.0, *) {
+            if (locationManager.accuracyAuthorization == CLAccuracyAuthorization.reducedAccuracy){
+                areWeReadyMessage.textColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+                areWeReadyMessage.text = "Location is not precise."
+            }
+            else{
+                areWeReadyMessage.text = "Location is available."
+            }
+        } else {
+            areWeReadyMessage.text = "Location is available."
+        }
     }
     
     
@@ -146,7 +126,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
         self.companyMessage.text = "Loading info..."
     FilesListService.instance.getCompanyInformation(){ (success, message) in
         if !success{
-            self.companyMessage.textColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+            self.companyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         }
         self.companyMessage.text = message
     }
