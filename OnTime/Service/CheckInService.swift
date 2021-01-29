@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 
+
 class CheckInService{
     static let instance = CheckInService()
     
@@ -18,7 +19,7 @@ class CheckInService{
     
     
     func registerUserActivity(loc : CLLocationCoordinate2D, activityType: ActivityType, completion: @escaping (Bool, String) -> ()){
-        var request = URLRequest(url: URL(string: REGISTER_USER_ACTIVITY)!)
+        var request = URLRequest(url: URL(string:REGISTER_USER_ACTIVITY)!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 10
@@ -32,6 +33,8 @@ class CheckInService{
         body["isLiveDataOrSync"] = "L"
         body["OSVersion"] = getIOSVersion()
         body["PhoneModel"] = getIPhoneModel()
+        body["IdentifierForVendor"] = identifierForVendor()
+        request.headers = HEADERS
         request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
         AF.request(request as URLRequestConvertible).responseJSON{response in
             let dict: [ActivityType : String] = [.CHECKIN : "Checked in", .BREAKSTART : "Started break",
@@ -40,34 +43,38 @@ class CheckInService{
             self.checkInInfo.fillData(from: body)
             self.checkInInfo.checkInState = activityType
             self.checkInInfo.isLiveData = true
-            if (response.error == nil){
+            if (response.response?.statusCode == 200){
                 let data = JSON(response.value!)
-                switch(data["acdSuccess"]){
-                case "Y":
+                //switch(data["acdSuccess"]){
+                //case "Y":
                     result += dict[activityType]!
                     let isSite = data["acdSiteID"].int8 ?? 0
                     let siteName = data["acdSiteName"].string!
-                    result += isSite == 1 ? " at: \n\(siteName) " : ".\n\(siteName)"
+                    result += isSite == 1 ? " at: \(siteName) " : ". \(siteName)"
                     self.checkInInfo.site = siteName
                     self.checkInInfo.resultId = data["acdID"].string ?? ""
                     completion(true, result)
-                default:
+                /*default:
                     result = data["acdErrorMessage"].string ?? "Error! Registration data was not saved!"
                     completion(false, result)
-                }
+                }*/
             }
             else {
                 result += "Could not connect to cloud. Activity saved on the phone. You need to Sync later."
                 self.checkInInfo.resultId = ""
-                completion(false, result)
+                guard let data = response.value else{
+                completion(false, "Failed to register activity online.")
+                    return
+                }
+                completion(false, data as! String)
                 }
             }
     }
     
     func syncUserActivity(checkInInfo: CheckInInfo, completion: @escaping (Bool, String) -> ()){
-        var request = URLRequest(url: URL(string: REGISTER_USER_ACTIVITY)!)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var request = URLRequest(url: URL(string:REGISTER_USER_ACTIVITY)!)
+        request.httpMethod = "POST"        
+        request.headers = HEADERS
         request.timeoutInterval = 10
         var body: [String: Any] = [:]
         body["UserToken"] = FilesListService.instance.getUserToken()
@@ -79,17 +86,18 @@ class CheckInService{
         body["isLiveDataOrSync"] = "S"
         body["OSVersion"] = getIOSVersion()
         body["PhoneModel"] = getIPhoneModel()
+        body["IdentifierForVendor"] = identifierForVendor()
         request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
         AF.request(request as URLRequestConvertible).responseJSON{response in
-            if (response.error == nil){
+            if (response.response?.statusCode == 200){
                 let data = JSON(response.value!)
-                switch(data["acdSuccess"]){
-                case "Y":
+                //switch(data["acdSuccess"]){
+                //case "Y":
                 let newResultId = data["acdID"].string ?? ""
                 completion(true, newResultId)
-                default:
+                /*default:
                 completion(false, data["acdErrorMessage"].string ?? "Error! Registration data was not saved!")
-                }
+                }*/
             }
                 else {
                 completion(false, "")

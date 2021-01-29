@@ -20,47 +20,49 @@ class FilesListService{
     
     func getBusinessFilesList(completion: @escaping (Bool, String)->()){
         let body = ["UserToken" : getUserToken()]
-        AF.request(GET_USER_BUSINESS_FILES_LIST, method: .post, parameters: body).responseJSON{response in
-            if (response.error == nil){
+        AF.request(GET_USER_BUSINESS_FILES_LIST, method: .post, parameters: body, headers: HEADERS).responseJSON{response in
+            if (response.response?.statusCode == 200){
                 let data = JSON(response.value!)
-                switch(data["dbtSuccess"]){
-                case "Y":
-                    let results = data["dbtBusinessFiles"].arrayValue
+                    let results = data.arrayValue
                     self.businessFiles = []
+                if results.isEmpty {
+                    completion(false, "")
+                    return
+                }
                     for result in results{
-                        let name = result["dbtBusinessName"].string!
-                        let token = result["dbtDBToken"].string!
+                        let name = result["xxbBusinessName"].string!
+                        let token = result["xxbDBToken"].string!
                         self.businessFiles.append(BusinessFile(name: name, token: token))
                     }
                     self.saveFiles()
                     completion(true, "")
-                default:
-                    completion(false, data["dbtErrorMessage"].string ?? "Database error")
-                }
             }
             else {
-                completion(false, "Failed to retrive business files")
+                guard let data = response.value else{
+                completion(false, "")
+                    return
+                }
+                completion(false, data as! String)
                 }
             }
         }
     
     func getCompanyInformation(completion: @escaping (Bool, String)->()){
         let body = ["UserToken" : getUserToken(), "DBToken" : getDBToken()]
-        AF.request(GET_COMPANY_INFORMATION, method: .post, parameters: body).responseJSON{response in
+        AF.request(GET_COMPANY_INFORMATION, method: .post, parameters: body, headers: HEADERS).responseJSON{response in
         if (response.error == nil){
             let data = JSON(response.value!)
-            switch(data["cmpSuccess"]){
-            case "Y":
-                let companyInfoHTML = data["cmpInfoMessage"].string ?? "<p>No info yet.</p>"
+                let companyInfoHTML = data["InfoMessage"].string ?? "<p>No info yet.</p>"
                 let companyInfo = companyInfoHTML.htmlToString.replacingOccurrences(of: "\n", with: "")
                 completion(true, companyInfo)
-            default:
-                completion(false, data["cmpErrorMessage"].string ?? "Error")
-            }
         }
         else {
             self.retrieveSavedFiles()
+            guard let data = response.value else{
             completion(false, "Failed to retrive company informations. Try it later.")
+                return
+            }
+            completion(false, data as! String)
             }
         }
     }

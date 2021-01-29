@@ -27,13 +27,10 @@ public private(set) var userToken: String
     }
     
     func login(withEmail email: String, andPassword password: String, completion: @escaping (Bool, String) -> ()){
-        let body = ["Email" : email, "Password": password]
-
-        AF.request(INIT_USER_AUTHENTIFICATION, method: .post, parameters: body).responseJSON{response in
-            if (response.error == nil){
+        let body = ["LoginEmail" : email, "LoginPassword": password]
+        AF.request(INIT_USER_AUTHENTIFICATION, method: .post, parameters: body, headers: HEADERS).responseJSON{response in
+            if (response.response?.statusCode == 200){
                 let data = JSON(response.value!)
-                switch(data["usrSuccess"]){
-                case "Y":
                     UserDefaults.standard.set(true, forKey: "loggedIn")
                     let userToken = data["usrUserToken"].string ?? ""
                     UserDefaults.standard.set(userToken, forKey: "userToken")
@@ -41,19 +38,27 @@ public private(set) var userToken: String
                     UserDefaults.standard.set(email, forKey: "email")
                     self.userToken = userToken
                     completion(true, "\(data["usrFirstName"]) \(data["usrLastName"])" )
-                default:
-                    completion(false, data["usrErrorMessage"].string ?? "Incorrect email and/or password")
-                }
             }
             else {
                 if (!email.isEmpty && password.isEmpty){
                     completion(false, "Please assign User Password!")
                 }
                 else {
-                completion(false, "Failed to log in")
+                    guard let data = response.value else{
+                        completion(false, "Failed to log in")
+                        return
+                    }
+                    completion(false, data as! String)
                 }
             }
         }
+    }
+    
+    func logout(){        
+            UserDefaults.standard.set(false,forKey: "loggedIn")
+            UserDefaults.standard.set("",forKey: "userToken")
+            UserDefaults.standard.set("",forKey: "name")
+            UserDefaults.standard.set("",forKey: "email")
     }
     
     

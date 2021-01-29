@@ -138,3 +138,14 @@ public extension NSLayoutConstraint {
         return NSLayoutConstraint(item: self.firstItem!, attribute: self.firstAttribute, relatedBy: self.relation, toItem: self.secondItem, attribute: self.secondAttribute, multiplier: multiplier, constant: self.constant)
     }
 }
+
+func identifierForVendor() -> String{
+    guard let id = UIDevice.current.identifierForVendor?.uuidString
+    else {return ""}
+    return id
+}
+
+public func obtainPublicIP(){
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    delegate.obtainPublicIP()
+}

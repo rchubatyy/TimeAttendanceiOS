@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3024544A2557D4A60022294E /* ColorlessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302454492557D4A50022294E /* ColorlessButton.swift */; };
+		3039C6A525C0A041005BA59E /* Olivs-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3039C6A425C0A041005BA59E /* Olivs-Info.plist */; };
 		30875B98251E61B3001C0F9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875B97251E61B3001C0F9E /* AppDelegate.swift */; };
 		30875B9A251E61B3001C0F9E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875B99251E61B3001C0F9E /* SceneDelegate.swift */; };
 		30875B9F251E61B3001C0F9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30875B9D251E61B3001C0F9E /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		1D836BB14C279734DABF9170 /* Pods_OnTime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnTime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		302454492557D4A50022294E /* ColorlessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorlessButton.swift; sourceTree = "<group>"; };
+		3039C6A425C0A041005BA59E /* Olivs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Olivs-Info.plist"; sourceTree = "<group>"; };
 		30875B94251E61B3001C0F9E /* OnTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30875B97251E61B3001C0F9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30875B99251E61B3001C0F9E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 		30E03641251E642A00ECD58A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3039C6A425C0A041005BA59E /* Olivs-Info.plist */,
 				30E0365F251E6D1D00ECD58A /* Constants.swift */,
 				30E03664251E6F5A00ECD58A /* Utilities.swift */,
 			);
@@ -373,6 +376,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3039C6A525C0A041005BA59E /* Olivs-Info.plist in Resources */,
 				30875BA4251E61B5001C0F9E /* LaunchScreen.storyboard in Resources */,
 				30E03684251E720000ECD58A /* OurLogoAndInfo.xib in Resources */,
 				30875BA1251E61B5001C0F9E /* Assets.xcassets in Resources */,

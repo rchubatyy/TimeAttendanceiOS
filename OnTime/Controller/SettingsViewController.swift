@@ -28,10 +28,7 @@ class SettingsViewController: UIViewController {
     
     
     @IBAction func logOffPressed(_ sender: Any) {
-        UserDefaults.standard.set(false,forKey: "loggedIn")
-        UserDefaults.standard.set("",forKey: "userToken")
-        UserDefaults.standard.set("",forKey: "name")
-        UserDefaults.standard.set("",forKey: "email")
+        LoginService.instance.logout()
         removeBusinessFile()
         showViewController(isLogin: true)
     }
@@ -68,7 +65,7 @@ class SettingsViewController: UIViewController {
         if #available(iOS 13.0, *) {
             let delegate = self.view.window?.windowScene?.delegate as? SceneDelegate
         
-            delegate?.window?.overrideUserInterfaceStyle = .light
+            //delegate?.window?.overrideUserInterfaceStyle = .light
             delegate?.window?.rootViewController = nav
             delegate?.window?.makeKeyAndVisible()
             delegate?.window?.overrideUserInterfaceStyle = .dark
@@ -77,8 +74,8 @@ class SettingsViewController: UIViewController {
             let delegate = UIApplication.shared.delegate as? AppDelegate
             delegate?.window?.rootViewController = nav
             delegate?.window?.makeKeyAndVisible()
-            
         }
+        dismiss(animated: true)
         
     }
     

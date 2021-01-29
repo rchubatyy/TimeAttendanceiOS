@@ -65,12 +65,7 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
         selectedItems?.forEach {
             self.fileList.deselectRow(at: $0, animated: false)
         }
-        if let _ = self.navigationController?.viewControllers[0] as? CheckInViewController{
-            dismiss(animated: true)
-        }
-        else {
             toCheckInScreen()
-        }
     }
     
     func toCheckInScreen(){
@@ -85,6 +80,12 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
                 self.okButton.isEnabled = false
             }
             else{
+                let alertController = UIAlertController(title: "There are no business files associated to this user.", message: nil, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Return", style: .default, handler: {_ in
+                    LoginService.instance.logout()
+                    self.dismiss(animated: true)
+                }))
+                self.present(alertController, animated: true)
                 if UserDefaults.standard.bool(forKey: "dbSelected"){
                     self.toCheckInScreen()
                 }

@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import SwiftPublicIP
 
 class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
@@ -23,7 +24,15 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        showCompanyInfo()
+        SwiftPublicIP.getPublicIP(url: PublicIPAPIURLs.ipv4.icanhazip.rawValue) { (string, error) in
+            if error == nil{
+                if let string = string {
+                PUBLIC_IP = string
+                }
+            }
+            self.showCompanyInfo()
+        }
+        //showCompanyInfo()
         setButtonsEnabled(false)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -75,11 +84,8 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
                         "To do this, go to\nSettings > Sync all activity.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .default))
                 self.present(alertController, animated: true)
-                self.resultsMessage.text = "Failed to upload data."
             }
-            else{
-                self.resultsMessage.text = message
-            }
+            self.resultsMessage.text = message
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.setButtonsEnabled(true)
             } 
@@ -122,8 +128,8 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     
     private func showCompanyInfo(){
-        self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        self.companyMessage.text = "Loading info..."
+        //self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        //self.companyMessage.text = "Loading info..."
     FilesListService.instance.getCompanyInformation(){ (success, message) in
         if !success{
             self.companyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)

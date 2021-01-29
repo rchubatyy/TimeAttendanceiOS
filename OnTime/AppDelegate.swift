@@ -7,11 +7,26 @@
 //
 
 import UIKit
+import SwiftPublicIP
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window : UIWindow?
+    private var reachability:Reachability!
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        NotificationCenter.default.addObserver(self, selector: #selector(checkForReachability),name: Notification.Name.reachabilityChanged, object: nil)
+        do{
+                self.reachability = try Reachability()
+            try self.reachability.startNotifier()
+        }catch {
+            print("Unable to create Reachability")
+        }
+        obtainPublicIP()
+        return true
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -33,6 +48,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
         return true
     }
+    
+    func obtainPublicIP(){
+        SwiftPublicIP.getPublicIP(url: PublicIPAPIURLs.ipv4.icanhazip.rawValue) { (string, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let string = string {
+                PUBLIC_IP = string
+            }
+        }
+    }
+    
+    @objc func checkForReachability(notification:NSNotification){
+        let networkReachability = notification.object as! Reachability;
+        let remoteHostStatus = networkReachability.connection
+        switch(remoteHostStatus){
+        case .wifi:
+            obtainPublicIP()
+        case .cellular:
+            obtainPublicIP()
+        default:
+            PUBLIC_IP = "127.0.0.1"
+        }
+        }
 
     // MARK: UISceneSession Lifecycle
 
