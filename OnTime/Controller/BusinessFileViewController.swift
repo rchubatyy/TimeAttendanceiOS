@@ -13,6 +13,9 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
     private let service = FilesListService.instance
     private var fileName: String?
     private var refreshControl = UIRefreshControl()
+    
+    
+    
     @IBOutlet weak var fileList: UITableView!
     @IBOutlet weak var okButton: UIButton!
     override func viewDidLoad() {
@@ -65,7 +68,17 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
         selectedItems?.forEach {
             self.fileList.deselectRow(at: $0, animated: false)
         }
+        if let vc = self.navigationController?.viewControllers[0] as? SettingsViewController{
+            if let _ = vc.presentingViewController as? RecordsViewController{
+                self.presentingViewController?.presentingViewController?.dismiss(animated: true)
+            }
+            else{
+                dismiss(animated: true)
+            }
+        }
+        else{
             toCheckInScreen()
+        }
     }
     
     func toCheckInScreen(){
@@ -80,7 +93,7 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
                 self.okButton.isEnabled = false
             }
             else{
-                let alertController = UIAlertController(title: "There are no business files associated to this user.", message: nil, preferredStyle: .alert)
+                let alertController = UIAlertController(title: error, message: nil, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Return", style: .default, handler: {_ in
                     LoginService.instance.logout()
                     self.dismiss(animated: true)
@@ -95,6 +108,8 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
         }
 
     }
+    
       
 
 }
+

@@ -32,6 +32,7 @@
 		30E03692251E729200ECD58A /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0368E251E729200ECD58A /* CheckInViewController.swift */; };
 		30E03693251E729200ECD58A /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0368F251E729200ECD58A /* RecordsViewController.swift */; };
 		30E03694251E729200ECD58A /* BusinessFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03690251E729200ECD58A /* BusinessFileViewController.swift */; };
+		30E178F925C595C70086DD47 /* DelegateNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E178F825C595C70086DD47 /* DelegateNavigationController.swift */; };
 		47D8E180A60AE7995BEEB012 /* Pods_OnTime_OnTimeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4399BAB563CCB3B72EC25412 /* Pods_OnTime_OnTimeUITests.framework */; };
 		E0D9A478D1EF01687247CA3E /* Pods_OnTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D836BB14C279734DABF9170 /* Pods_OnTime.framework */; };
 		F9BE4F4126CD34346DF399EA /* Pods_OnTimeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60517A18538E4F8A3B6F23EF /* Pods_OnTimeTests.framework */; };
@@ -87,6 +88,7 @@
 		30E0368E251E729200ECD58A /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		30E0368F251E729200ECD58A /* RecordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 		30E03690251E729200ECD58A /* BusinessFileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessFileViewController.swift; sourceTree = "<group>"; };
+		30E178F825C595C70086DD47 /* DelegateNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateNavigationController.swift; sourceTree = "<group>"; };
 		40DE79046738C52070B9C64B /* Pods-OnTime-OnTimeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTime-OnTimeUITests.release.xcconfig"; path = "Target Support Files/Pods-OnTime-OnTimeUITests/Pods-OnTime-OnTimeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4399BAB563CCB3B72EC25412 /* Pods_OnTime_OnTimeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnTime_OnTimeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5373C345F1D8D4A7259198E8 /* Pods-OnTimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OnTimeTests.debug.xcconfig"; path = "Target Support Files/Pods-OnTimeTests/Pods-OnTimeTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				30E0367B251E717100ECD58A /* OurLogoAndInfo.swift */,
 				302454492557D4A50022294E /* ColorlessButton.swift */,
 				30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */,
+				30E178F825C595C70086DD47 /* DelegateNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				30E03691251E729200ECD58A /* SettingsViewController.swift in Sources */,
 				30E03694251E729200ECD58A /* BusinessFileViewController.swift in Sources */,
 				30E03660251E6D1E00ECD58A /* Constants.swift in Sources */,
+				30E178F925C595C70086DD47 /* DelegateNavigationController.swift in Sources */,
 				30E03693251E729200ECD58A /* RecordsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

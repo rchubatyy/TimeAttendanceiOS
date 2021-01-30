@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func changeBusinessFilePressed(_ sender: Any) {
-        showViewController(isLogin: false)
+        //showViewController(isLogin: false)
     }
     
     @IBAction func syncPressed(_ sender: Any) {

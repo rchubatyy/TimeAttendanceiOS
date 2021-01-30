@@ -45,8 +45,6 @@ class CheckInService{
             self.checkInInfo.isLiveData = true
             if (response.response?.statusCode == 200){
                 let data = JSON(response.value!)
-                //switch(data["acdSuccess"]){
-                //case "Y":
                     result += dict[activityType]!
                     let isSite = data["acdSiteID"].int8 ?? 0
                     let siteName = data["acdSiteName"].string!
@@ -54,10 +52,6 @@ class CheckInService{
                     self.checkInInfo.site = siteName
                     self.checkInInfo.resultId = data["acdID"].string ?? ""
                     completion(true, result)
-                /*default:
-                    result = data["acdErrorMessage"].string ?? "Error! Registration data was not saved!"
-                    completion(false, result)
-                }*/
             }
             else {
                 result += "Could not connect to cloud. Activity saved on the phone. You need to Sync later."
@@ -73,7 +67,8 @@ class CheckInService{
     
     func syncUserActivity(checkInInfo: CheckInInfo, completion: @escaping (Bool, String) -> ()){
         var request = URLRequest(url: URL(string:REGISTER_USER_ACTIVITY)!)
-        request.httpMethod = "POST"        
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.headers = HEADERS
         request.timeoutInterval = 10
         var body: [String: Any] = [:]
@@ -100,6 +95,7 @@ class CheckInService{
                 }*/
             }
                 else {
+                    print(response.value!)
                 completion(false, "")
             }
         }

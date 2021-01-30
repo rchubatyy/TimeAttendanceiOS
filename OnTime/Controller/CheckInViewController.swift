@@ -12,7 +12,8 @@ import Alamofire
 import SwiftyJSON
 import SwiftPublicIP
 
-class CheckInViewController: UIViewController, CLLocationManagerDelegate {
+class CheckInViewController: UIViewController, CLLocationManagerDelegate, ChangeBusinessFileDelegate {
+    
     
     @IBOutlet weak var companyMessage: UILabel!
     @IBOutlet weak var areWeReadyMessage: UILabel!
@@ -21,6 +22,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     var isLocationRequested: Bool = false
     let locationManager = CLLocationManager()
     var lastLoc : CLLocationCoordinate2D?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,8 +130,6 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     
     
     private func showCompanyInfo(){
-        //self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        //self.companyMessage.text = "Loading info..."
     FilesListService.instance.getCompanyInformation(){ (success, message) in
         if !success{
             self.companyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
@@ -138,5 +138,15 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate {
     }
     }
     
+    func refreshCompanyInfo() {
+        showCompanyInfo()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "TO_SETTINGS" {
+                let nc = segue.destination as! DelegateNavigationController
+                nc.changeDelegate = self
+            }
+        }
 
 }

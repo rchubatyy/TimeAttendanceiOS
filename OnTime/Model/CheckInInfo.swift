@@ -29,6 +29,8 @@ class CheckInInfo{
     
     
     func fillData(from body: [String: Any]){
+        self.usrToken = UserDefaults.standard.string(forKey: "userToken") ?? ""
+        self.dbToken = UserDefaults.standard.string(forKey: "dbToken") ?? ""
         let time = body["PhDateTime"] as? String
         self.time = time?.replacingOccurrences(of: "/", with: "-")
         self.lat = body["GPSLat"] as? Double

@@ -26,7 +26,7 @@ class FilesListService{
                     let results = data.arrayValue
                     self.businessFiles = []
                 if results.isEmpty {
-                    completion(false, "")
+                    completion(false, "There are no business files associated to this user.")
                     return
                 }
                     for result in results{
@@ -39,7 +39,7 @@ class FilesListService{
             }
             else {
                 guard let data = response.value else{
-                completion(false, "")
+                completion(false, "Error loading business files.")
                     return
                 }
                 completion(false, data as! String)
