@@ -27,6 +27,14 @@ public private(set) var userToken: String
     }
     
     func login(withEmail email: String, andPassword password: String, completion: @escaping (Bool, String) -> ()){
+            if (email.isEmpty){
+                completion(false, "Please assign User Email!")
+                return
+            }
+            else if (password.isEmpty){
+                completion(false, "Please assign User Password!")
+                return
+            }
         let body = ["LoginEmail" : email, "LoginPassword": password]
         AF.request(INIT_USER_AUTHENTIFICATION, method: .post, parameters: body, headers: HEADERS).responseJSON{response in
             if (response.response?.statusCode == 200){
@@ -40,16 +48,12 @@ public private(set) var userToken: String
                     completion(true, "\(data["usrFirstName"]) \(data["usrLastName"])" )
             }
             else {
-                if (!email.isEmpty && password.isEmpty){
-                    completion(false, "Please assign User Password!")
-                }
-                else {
                     guard let data = response.value else{
                         completion(false, "Failed to log in")
                         return
                     }
                     completion(false, data as! String)
-                }
+                
             }
         }
     }

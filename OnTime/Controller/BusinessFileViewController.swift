@@ -95,13 +95,15 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
             else{
                 let alertController = UIAlertController(title: error, message: nil, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Return", style: .default, handler: {_ in
-                    LoginService.instance.logout()
+                    if !UserDefaults.standard.bool(forKey: "dbSelected"){
+                        LoginService.instance.logout()
+                    }
                     self.dismiss(animated: true)
                 }))
                 self.present(alertController, animated: true)
-                if UserDefaults.standard.bool(forKey: "dbSelected"){
+                /*if UserDefaults.standard.bool(forKey: "dbSelected"){
                     self.toCheckInScreen()
-                }
+                }*/
             }
 
             self.refreshControl.endRefreshing()
