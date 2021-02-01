@@ -31,6 +31,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        let forgotTap = UITapGestureRecognizer(target: self, action: #selector(toForgotPassword))
+        forgotPasswordLink.addGestureRecognizer(forgotTap)
+        let registerTap = UITapGestureRecognizer(target: self, action: #selector(toLearnMoreAndRegister))
+        learnMoreAndRegisterLink.addGestureRecognizer(registerTap)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -111,6 +115,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         view.layoutIfNeeded()
         logoSize = newConstraint
         }
+    
+    @objc func toForgotPassword(sender: UITapGestureRecognizer){
+        print("should be called")
+        if let url = URL(string: "https://s1.olivs.app/0/en-au/olivs/forgot-user-login-password") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc func toLearnMoreAndRegister(sender: UITapGestureRecognizer){
+        if let url = URL(string: "https://olivs.app/ontime") {
+            UIApplication.shared.open(url)
+        }
+    }
     
     
 }
