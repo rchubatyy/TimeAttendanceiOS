@@ -10,7 +10,6 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
-import SwiftPublicIP
 
 class CheckInViewController: UIViewController, CLLocationManagerDelegate, ChangeBusinessFileDelegate {
     
@@ -26,15 +25,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        SwiftPublicIP.getPublicIP(url: PublicIPAPIURLs.ipv4.icanhazip.rawValue) { (string, error) in
-            if error == nil{
-                if let string = string {
-                PUBLIC_IP = string
-                }
-            }
-            self.showCompanyInfo()
-        }
-        //showCompanyInfo()
+        showCompanyInfo()
         setButtonsEnabled(false)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()

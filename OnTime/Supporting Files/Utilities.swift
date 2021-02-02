@@ -144,8 +144,3 @@ func identifierForVendor() -> String{
     else {return ""}
     return id
 }
-
-public func obtainPublicIP(){
-    let delegate = UIApplication.shared.delegate as! AppDelegate
-    delegate.obtainPublicIP()
-}
