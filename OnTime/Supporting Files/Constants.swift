@@ -51,7 +51,7 @@ let PUBLIC_IP = "192.168.0.1"
 
 var requestHeaders: [String:String] = ["Api-Key" : apiKey,
                         "Olivs-Root-Password" : olivsRootPassword,
-                        "Olivs-API-Real-IP" : PUBLIC_IP,
+                        "Olivs-API-Real-IP" : "192.168.0.1",
                         "Olivs-API-Computer-Name" : "BTMSOFTPC"]
 
 let HEADERS = HTTPHeaders(requestHeaders)

@@ -6,8 +6,6 @@ target 'OnTime' do
   use_frameworks!
 	pod 'Alamofire'
 	pod 'SwiftyJSON'
-  	pod 'SwiftPublicIP'
-	pod 'ReachabilitySwift'
   # Pods for OnTime
 
   target 'OnTimeTests' do

@@ -7,14 +7,12 @@
 //
 
 import UIKit
-import SwiftPublicIP
-import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window : UIWindow?
-    private var reachability:Reachability!
+    //private var reachability:Reachability!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -47,10 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }*/
     
-    @objc func checkForReachability(notification:NSNotification){
+    /*@objc func checkForReachability(notification:NSNotification){
         let networkReachability = notification.object as! Reachability;
         _ = networkReachability.connection
-        /*switch(remoteHostStatus){
+        switch(remoteHostStatus){
         case .wifi:
             obtainPublicIP()
         case .cellular:
@@ -58,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             PUBLIC_IP = "127.0.0.1"
         }*/
-        }
 
     // MARK: UISceneSession Lifecycle
 

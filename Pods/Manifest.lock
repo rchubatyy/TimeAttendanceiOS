@@ -1,28 +1,20 @@
 PODS:
   - Alamofire (5.2.2)
-  - ReachabilitySwift (5.0.0)
-  - SwiftPublicIP (0.0.2)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
-  - ReachabilitySwift
-  - SwiftPublicIP
   - SwiftyJSON
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - ReachabilitySwift
-    - SwiftPublicIP
     - SwiftyJSON
 
 SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SwiftPublicIP: 541a07881cf504954e30237eaa99157b1aa50ca3
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: d5ac9e5cd32bba26ca0ad039b23b7988e428074b
+PODFILE CHECKSUM: 4eb9ab3233bdb7bd9d839a69cf9cdd075d8435f7
 
 COCOAPODS: 1.9.3
