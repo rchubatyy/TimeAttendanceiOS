@@ -50,7 +50,7 @@ class FilesListService{
     func getCompanyInformation(completion: @escaping (Bool, String)->()){
         let body = ["UserToken" : getUserToken(), "DBToken" : getDBToken()]
         AF.request(GET_COMPANY_INFORMATION, method: .post, parameters: body, headers: HEADERS).responseJSON{response in
-        if (response.error == nil){
+        if (response.response?.statusCode == 200){
             let data = JSON(response.value!)
                 let companyInfoHTML = data["InfoMessage"].string ?? "<p>No info yet.</p>"
                 let companyInfo = companyInfoHTML.htmlToString.replacingOccurrences(of: "\n", with: "")

@@ -75,6 +75,10 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
             else{
                 dismiss(animated: true)
             }
+            let nav = self.navigationController as! DelegateNavigationController
+            if let delegate = nav.changeDelegate{
+                delegate.refreshCompanyInfo()
+            }
         }
         else{
             toCheckInScreen()

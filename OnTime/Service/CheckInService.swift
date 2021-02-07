@@ -54,7 +54,6 @@ class CheckInService{
                     completion(true, result)
             }
             else {
-                result += "Could not connect to cloud. Activity saved on the phone. You need to Sync later."
                 self.checkInInfo.resultId = ""
                 guard let data = response.value else{
                 completion(false, "Failed to register activity online.")
@@ -95,7 +94,6 @@ class CheckInService{
                 }*/
             }
                 else {
-                    print(response.value!)
                 completion(false, "")
             }
         }

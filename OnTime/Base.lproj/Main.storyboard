@@ -280,7 +280,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Getting status..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="Iuv-8N-fNT">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Getting status..." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="Iuv-8N-fNT">
                                         <rect key="frame" x="0.0" y="49.333333333333343" width="150" height="26.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
@@ -468,6 +468,7 @@
                             <constraint firstItem="nMJ-Ka-4fv" firstAttribute="top" secondItem="i4H-Pt-IRh" secondAttribute="top" constant="30" id="TwL-cu-uaW"/>
                             <constraint firstItem="ehP-8d-meq" firstAttribute="leading" secondItem="i4H-Pt-IRh" secondAttribute="leading" constant="15" id="UHf-Z1-U2f"/>
                             <constraint firstItem="i4H-Pt-IRh" firstAttribute="trailing" secondItem="tgY-gb-FLu" secondAttribute="trailing" constant="20" id="fNC-ow-8PT"/>
+                            <constraint firstItem="tgY-gb-FLu" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="siu-hR-Tvu" secondAttribute="top" constant="-10" id="gi3-9Y-FPc"/>
                             <constraint firstItem="8Ce-Cd-0R9" firstAttribute="width" secondItem="i4H-Pt-IRh" secondAttribute="width" multiplier="0.374396" id="gnq-dV-vvf"/>
                             <constraint firstItem="Cn0-xg-bFv" firstAttribute="height" relation="lessThanOrEqual" secondItem="IxU-9m-0kG" secondAttribute="height" multiplier="0.13" id="hCJ-bo-Xqe"/>
                             <constraint firstItem="ffo-8a-w8l" firstAttribute="top" secondItem="siu-hR-Tvu" secondAttribute="bottom" constant="30" id="l3o-DA-FAi"/>
@@ -748,7 +749,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="titleLabel.adjustsFontSizeToFitWidth" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="viO-uG-4mV" kind="show" animates="NO" id="C2x-Jm-1Tf"/>
+                                            <segue destination="viO-uG-4mV" kind="show" identifier="RECORDS_TO_SETTINGS" animates="NO" id="C2x-Jm-1Tf"/>
                                         </connections>
                                     </button>
                                 </subviews>

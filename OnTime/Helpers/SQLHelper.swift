@@ -125,9 +125,10 @@ public class SQLHelper{
     func sync(completion: @escaping (Bool, String)->()){
         let records = getRecords(unsyncedOnly: true)
         if records.isEmpty{
-            completion(true, "Nothing to sync")
+            completion(true, "All items synced")
+            return
         }
-        for record in records{
+        let record = records.last!
             CheckInService.instance.syncUserActivity(checkInInfo: record){(success, message) in
                 if success{
                 let id = record.id
@@ -138,7 +139,7 @@ public class SQLHelper{
                 WHERE id = \(id)
                 """
                     if sqlite3_exec(self.db, updateQuery, nil, nil, nil) == SQLITE_OK{
-                        completion(true, "Synced!")
+                        self.sync(completion: completion)
                     }
                     else{
                     completion(false, "Failed to write to phone")
@@ -148,13 +149,7 @@ public class SQLHelper{
                     completion(false, "Failed to sync")
                 }
         }
-    }
-    }
-    
-    
-    func dropTable(){
-        if sqlite3_exec(db, "DROP TABLE tblRecords", nil, nil, nil) != SQLITE_OK {
-        }
+
     }
     
     

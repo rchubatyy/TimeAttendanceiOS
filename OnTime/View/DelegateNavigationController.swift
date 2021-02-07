@@ -18,9 +18,9 @@ class DelegateNavigationController: UINavigationController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        if let delegate = self.changeDelegate{
+        /*if let delegate = self.changeDelegate{
             delegate.refreshCompanyInfo()
-        }
+        }*/
     }
     
 

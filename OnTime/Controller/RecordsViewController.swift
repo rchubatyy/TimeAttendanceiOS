@@ -125,6 +125,15 @@ class RecordsViewController: UIViewController, UIPickerViewDataSource, UIPickerV
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if segue.identifier == "RECORDS_TO_SETTINGS" {
+                let nc = segue.destination as! DelegateNavigationController
+                let nav = self.presentingViewController as! UINavigationController
+                let vc = nav.viewControllers.last as! CheckInViewController
+                nc.changeDelegate = vc
+            }
+        }
+    
     
 
 }
