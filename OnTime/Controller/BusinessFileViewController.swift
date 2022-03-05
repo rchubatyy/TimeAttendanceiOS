@@ -56,8 +56,8 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.okButton.backgroundColor = BUTTON_COLOR
         self.okButton.isEnabled = true
-        self.service.dbToken = self.service.businessFiles[indexPath.row].token!
-        self.fileName = self.service.businessFiles[indexPath.row].name!
+        self.service.dbToken = self.service.businessFiles[indexPath.row].token ?? ""
+        self.fileName = self.service.businessFiles[indexPath.row].name ?? "No name"
     }
     
     @IBAction func okButtonPressed(_ sender: Any) {

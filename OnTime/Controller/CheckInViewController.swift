@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import Alamofire
 import SwiftyJSON
+import UserNotifications
 
 class CheckInViewController: UIViewController, CLLocationManagerDelegate, ChangeBusinessFileDelegate {
     
@@ -20,13 +21,22 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
     @IBOutlet weak var resultsMessage: UILabel!
     let locationManager = CLLocationManager()
     var registering: Bool = false
+    var locationAvailable: Bool = false
+    var userInfoLoaded: Bool = false
     var state: ActivityType?
+    var questionId: Int?
+    var questionAnswer: String?
     let reachability = NetworkReachabilityManager()
     var infoShown: Bool!
+    let notificationCenter = UNUserNotificationCenter.current()
+    var alertMessage: DispatchWorkItem?
+    
+    let userInfoService = UserInfoService.instance
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationCenter.removeAllDeliveredNotifications()
         infoShown = false
         showCompanyInfo()
         setButtonsEnabled(false)
@@ -35,6 +45,8 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
                 self.showCompanyInfo()
             }
         }
+        
+        getUserInfo()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = 1
@@ -43,15 +55,30 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         if (CLLocationManager.locationServicesEnabled()){
             showCanGetLocation()
         }
+        let notc = NotificationCenter.default
+            notc.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notc.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { granted, error in
+                        if granted == true && error == nil {
+                            // We have permission!
+                        }
+                        else{
+                            print("We need notifications!")
+                        }
+                }
+        setAlertMessage()
+        turnAlertOn()
     }
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        /*if (CheckInService.instance.reinitCheckInInfo()){
-            showCompanyInfo()
-        }*/
-        
+    @objc func appMovedToBackground(){
+        alertMessage?.cancel()
     }
+    
+    @objc func appMovedToForeground(){
+        turnAlertOn()
+        notificationCenter.removeAllDeliveredNotifications()
+    }
+    
     
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -64,9 +91,12 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         resultsMessage.text = "Uploading activity..."
         if let location = locations.last?.coordinate, let state = self.state, !registering{
             registering = true
-        CheckInService.instance.registerUserActivity(loc: location, activityType: state){(success, message) in
-            self.registering = false
+            getUserInfo()
+        CheckInService.instance.registerUserActivity(loc: location, activityType: state, questionId: questionId ?? 0, questionAnswer: questionAnswer ?? "X"){(success, message) in
                 SQLHelper.instance.insert(record: CheckInService.instance.checkInInfo)
+            if let reachable = self.reachability?.isReachable, reachable{
+                SQLHelper.instance.sync(){(success, message) in }
+            }
             if !success {
                 let alertController = UIAlertController(title: "Could not connect to service, but your activity is saved on your phone. You need to sync the activity later.", message:
                         "To do this, go to\nSettings > Sync all activity.", preferredStyle: .alert)
@@ -76,14 +106,16 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
             self.resultsMessage.text = message
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self.setButtonsEnabled(true)
+                self.registering = false
             }
+            self.turnAlertOn()
         }
         }        
     }
     
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status != .authorizedAlways && status != .authorizedWhenInUse{
+        if status != .authorizedAlways && status != .authorizedWhenInUse && status != .notDetermined{
         showCannotGetLocation()
         }
         else{
@@ -93,11 +125,31 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
     
 
     @IBAction func buttonPressed (sender: UIButton){
+        alertMessage?.cancel()
+        self.getUserInfo()
         let states: [Int: ActivityType] = [1: .CHECKIN, 2: .BREAKSTART, 3: .BREAKEND, 4: .CHECKOUT]
         self.state = states[sender.tag]!
-        resultsMessage.text = "Getting location..."
-        locationManager.startUpdatingLocation()
-        setButtonsEnabled(false)
+        if let questionId = userInfoService.questionIds[state!], let q = userInfoService.questions[state!], let question = q, question != ""{
+            self.questionId = questionId
+            let alert = UIAlertController(title: question, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default) { action in
+                self.questionAnswer = "Y"
+                self.startUploadingData()
+            })
+            alert.addAction(UIAlertAction(title: "No", style: .default) { action in
+                self.questionAnswer = "N"
+                self.startUploadingData()
+            })
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            self.turnAlertOn()
+        })
+            self.present(alert, animated: true, completion: nil)
+        }
+        else{
+            self.questionAnswer = "X"
+            self.startUploadingData()
+        }
+        
     }
     
     func setButtonsEnabled(_ status: Bool){
@@ -113,13 +165,17 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
     }
     
     private func showCannotGetLocation(){
+        locationAvailable = false
         setButtonsEnabled(false)
         areWeReadyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
         areWeReadyMessage.text = "Location is not available."
     }
     
     private func showCanGetLocation(){
-        setButtonsEnabled(true)
+        locationAvailable = true
+        if userInfoLoaded{
+            setButtonsEnabled(true)
+        }
         areWeReadyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         if #available(iOS 14.0, *) {
             if (locationManager.accuracyAuthorization == CLAccuracyAuthorization.reducedAccuracy){
@@ -147,12 +203,15 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         else{
             self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
-        self.companyMessage.text = message
+        self.companyMessage.attributedText = message
     }
     }
     
     @objc func refreshCompanyInfo() {
+        setButtonsEnabled(false)
         showCompanyInfo()
+        UserInfoService.instance.removeUserInfo()
+        getUserInfo()
     }
     
     
@@ -162,5 +221,72 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
                 nc.changeDelegate = self
             }
         }
+    
+    func scheduleNotification(time: String?, after: ActivityType?){
+        notificationCenter.removeAllPendingNotificationRequests()
+        let content = UNMutableNotificationContent()
+        var toCheckIn: Bool = true
+        if let after = after{
+            toCheckIn = after == .CHECKOUT
+        }
+        content.title = "Time to check \(toCheckIn ? "in" : "out")"
+        content.body = "Please do not forget to check \(toCheckIn ? "in" : "out")."
+        content.sound = UNNotificationSound.default
 
+        // Setup trigger time
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy HH:mm"
+        if let time = time, let date = dateFormatter.date(from: time){
+        let calendar = Calendar.current
+        let dateMatching = calendar.dateComponents([.day,.month,.year,.hour,.minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateMatching, repeats: false)
+
+        // Create request
+        let uniqueID = UUID().uuidString // Keep a record of this if necessary
+        let request = UNNotificationRequest(identifier: uniqueID, content: content, trigger: trigger)
+        notificationCenter.add(request) // Add the notification request
+        }
+    }
+    
+    func startUploadingData(){
+        resultsMessage.text = "Getting location..."
+        locationManager.startUpdatingLocation()
+        setButtonsEnabled(false)
+    }
+    
+    func setAlertMessage(){
+        alertMessage = DispatchWorkItem(block:{
+            let alert = UIAlertController(title: "We haven’t seen you for a while.", message: "Click OK to continue", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { action in
+                self.setAlertMessage()
+                self.turnAlertOn()
+                self.showCompanyInfo()
+                self.getUserInfo()
+            })
+            self.present(alert, animated: true, completion: nil)
+        })
+    }
+    
+    func turnAlertOn(){
+        self.setAlertMessage()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 60, execute: alertMessage!)
+    }
+    
+    func getUserInfo(){
+        userInfoService.getUserInfo(){success in
+            self.userInfoLoaded = true
+            if self.locationAvailable, !self.registering{
+                self.setButtonsEnabled(true)
+            }
+            if success{
+                
+                self.scheduleNotification(time: self.userInfoService.rosterReminderData,
+                                      after: self.userInfoService.lastEvent)
+            }
+            else{
+                //self.getUserInfo()
+            }
+        }
+    }
+    
 }

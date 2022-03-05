@@ -18,8 +18,9 @@ class CheckInService{
     let checkInInfo = CheckInInfo()
     
     
-    func registerUserActivity(loc : CLLocationCoordinate2D, activityType: ActivityType, completion: @escaping (Bool, String) -> ()){
+    func registerUserActivity(loc : CLLocationCoordinate2D, activityType: ActivityType, questionId: Int, questionAnswer: String, completion: @escaping (Bool, String) -> ()){
         var request = URLRequest(url: URL(string:REGISTER_USER_ACTIVITY)!)
+        print(HEADERS)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 10
@@ -34,6 +35,9 @@ class CheckInService{
         body["OSVersion"] = getIOSVersion()
         body["PhoneModel"] = getIPhoneModel()
         body["IdentifierForVendor"] = identifierForVendor()
+        body["QuestionID"] = questionId
+        body["Answer"] = questionAnswer
+        print(body)
         request.headers = HEADERS
         request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
         AF.request(request as URLRequestConvertible).responseJSON{response in
@@ -47,7 +51,7 @@ class CheckInService{
                 let data = JSON(response.value!)
                     result += dict[activityType]!
                     let isSite = data["acdSiteID"].int8 ?? 0
-                    let siteName = data["acdSiteName"].string!
+                    let siteName = data["acdSiteName"].string ?? "\nSite not recognized"
                     result += isSite == 1 ? " at: \(siteName) " : ". \(siteName)"
                     self.checkInInfo.site = siteName
                     self.checkInInfo.resultId = data["acdID"].string ?? ""
@@ -59,9 +63,30 @@ class CheckInService{
                 completion(false, "Failed to register activity online.")
                     return
                 }
-                completion(false, data as! String)
+                var dataMessage = String(describing: data)
+                if dataMessage.hasPrefix("{"), dataMessage.hasSuffix("}"){
+                dataMessage = dataMessage.replacingOccurrences(of: "=", with: ":")
+                dataMessage = dataMessage.replacingOccurrences(of: "Message", with: "\"Message\"")
+                dataMessage = dataMessage.replacingOccurrences(of: "\";", with: "\"")
+                    let dataMessageJSON = JSON.init(parseJSON: dataMessage)
+                    if let message = dataMessageJSON["Message"].string{
+                        completion(false, message)
+                    }
+                    else{
+                        completion(false, dataMessage)
+                    }
                 }
+                else{
+                completion(false, dataMessage)
+                }
+//                if let dataMessage = String(describing: data){
+//                    completion(false, dataMessage)
+//                }
+//                else{
+//                    completion(false, "Failed to register activity online.")
+//                }
             }
+    }
     }
     
     func syncUserActivity(checkInInfo: CheckInInfo, completion: @escaping (Bool, String) -> ()){
@@ -81,6 +106,8 @@ class CheckInService{
         body["OSVersion"] = getIOSVersion()
         body["PhoneModel"] = getIPhoneModel()
         body["IdentifierForVendor"] = identifierForVendor()
+        body["QuestionID"] = checkInInfo.questionID!
+        body["Answer"] = checkInInfo.questionAnswer!
         request.httpBody = try! JSONSerialization.data(withJSONObject: body, options: [])
         AF.request(request as URLRequestConvertible).responseJSON{response in
             if (response.response?.statusCode == 200){
@@ -98,6 +125,8 @@ class CheckInService{
             }
         }
     }
+    
+    
     
     func reinitCheckInInfo() -> Bool{
         let oldUsrToken = self.checkInInfo.usrToken

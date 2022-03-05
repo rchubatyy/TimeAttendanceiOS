@@ -46,6 +46,10 @@ public enum Model : String {
     iPhone12           = "iPhone 12",
     iPhone12Pro        = "iPhone 12 Pro",
     iPhone12ProMax     = "iPhone 12 Pro Max",
+    iPhone13Mini       = "iPhone 13 Mini",
+    iPhone13           = "iPhone 13",
+    iPhone13Pro        = "iPhone 13 Pro",
+    iPhone13ProMax     = "iPhone 13 Pro Max",
     unrecognized       = "unrecognized"
 }
 
@@ -95,7 +99,11 @@ public extension UIDevice {
             "iPhone13,1" : .iPhone12Mini,
             "iPhone13,2" : .iPhone12,
             "iPhone13,3" : .iPhone12Pro,
-            "iPhone13,4" : .iPhone12ProMax
+            "iPhone13,4" : .iPhone12ProMax,
+            "iPhone14,4" : .iPhone13Mini,
+            "iPhone14,5" : .iPhone13,
+            "iPhone14,2" : .iPhone13Pro,
+            "iPhone14,3" : .iPhone13ProMax
     ]
 
         if let model = modelMap[String.init(validatingUTF8: modelCode!)!] {
@@ -143,4 +151,21 @@ func identifierForVendor() -> String{
     guard let id = UIDevice.current.identifierForVendor?.uuidString
     else {return ""}
     return id
+}
+
+func getAllLanguages() -> [String]{
+    return ["en-au"]
+}
+
+func getCurrentLanguage() -> String{
+    let language = Locale.current.languageCode;
+    let country = Locale.current.regionCode;
+    let lang = "\(language ?? "en")-\(country?.lowercased() ?? "au")"
+    let allLangs = getAllLanguages()
+    if allLangs.contains(lang){
+        return lang
+    }
+    else{
+    return "en-au"
+    }
 }

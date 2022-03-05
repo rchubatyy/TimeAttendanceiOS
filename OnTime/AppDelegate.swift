@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window : UIWindow?
     //private var reachability:Reachability!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        UNUserNotificationCenter.current().delegate = self
         if #available(iOS 13.0, *) {
                     // In iOS 13 setup is done in SceneDelegate
                 } else {
@@ -34,6 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
         return true
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+            willPresent notification: UNNotification,
+            withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
+            -> Void) {
+            completionHandler([.alert, .badge, .sound])
+        }
     
     /*func obtainPublicIP(){
         SwiftPublicIP.getPublicIP(url: PublicIPAPIURLs.ipv4.icanhazip.rawValue) { (string, error) in

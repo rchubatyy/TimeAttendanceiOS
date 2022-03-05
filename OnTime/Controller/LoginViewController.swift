@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import CoreLocation
+import UserNotifications
 
 class LoginViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var logo: OurLogoAndInfo!
@@ -39,6 +40,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         locationManager.requestWhenInUseAuthorization()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, error in
+                        if granted == true && error == nil {
+                            // We have permission!
+                        }
+                        else{
+                            print("We need notifications!")
+                        }
+                }
     }
     
     deinit {
@@ -117,14 +126,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         }
     
     @objc func toForgotPassword(sender: UITapGestureRecognizer){
-        print("should be called")
-        if let url = URL(string: "https://s1.olivs.app/0/en-au/olivs/forgot-user-login-password") {
+        if let url = URL(string: FORGOT_PASSWORD_LINK) {
             UIApplication.shared.open(url)
         }
     }
     
     @objc func toLearnMoreAndRegister(sender: UITapGestureRecognizer){
-        if let url = URL(string: "https://olivs.app/ontime") {
+        if let url = URL(string: REGISTER_LINK) {
             UIApplication.shared.open(url)
         }
     }

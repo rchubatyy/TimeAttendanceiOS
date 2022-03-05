@@ -10,12 +10,20 @@ import UIKit
 import Alamofire
 
 
-let BASE_URL = "https://ontimeappservice1.olivs.cloud/api/en-au/app/"
+let BASE_URL = "https://ontimeappservice1.olivs.cloud/api/" + getCurrentLanguage()
+let BASE_URL_V1 = BASE_URL + "/app/"
+let BASE_URL_V2 = BASE_URL + "/ontimev2/"
 
-let INIT_USER_AUTHENTIFICATION = BASE_URL + "init-user-authentification"
-let GET_USER_BUSINESS_FILES_LIST = BASE_URL + "get-user-business-files-list"
-let GET_COMPANY_INFORMATION = BASE_URL + "get-company-information"
-let REGISTER_USER_ACTIVITY = BASE_URL + "register-user-activity"
+
+let INIT_USER_AUTHENTIFICATION = BASE_URL_V2 + "init-user-authentification"
+let GET_USER_BUSINESS_FILES_LIST = BASE_URL_V2 + "get-user-business-files-list"
+let GET_COMPANY_INFORMATION = BASE_URL_V1 + "get-company-information"
+let GET_USER_INFO = BASE_URL_V2 + "get-user-info"
+let REGISTER_USER_ACTIVITY = BASE_URL_V2 + "register-user-activity-v2"
+
+let FORGOT_PASSWORD_LINK = "https://s1.olivs.app/0/en-au/olivs/forgot-user-login-password"
+let REGISTER_LINK = "https://olivs.app/ontime"
+let HELP_WEBSITE = "https://help.olivs.app/ontime/"
 
 private var apiKey: String {
   get {

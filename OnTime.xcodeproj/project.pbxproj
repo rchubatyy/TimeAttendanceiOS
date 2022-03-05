@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3024544A2557D4A60022294E /* ColorlessButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302454492557D4A50022294E /* ColorlessButton.swift */; };
 		3039C6A525C0A041005BA59E /* Olivs-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3039C6A425C0A041005BA59E /* Olivs-Info.plist */; };
+		3044ED7926A45FB4003DD89D /* UserInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044ED7826A45FB4003DD89D /* UserInfoService.swift */; };
+		3069DFD326A834D6001AC037 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3069DFD226A834D6001AC037 /* GoogleService-Info.plist */; };
 		30875B98251E61B3001C0F9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875B97251E61B3001C0F9E /* AppDelegate.swift */; };
 		30875B9A251E61B3001C0F9E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875B99251E61B3001C0F9E /* SceneDelegate.swift */; };
 		30875B9F251E61B3001C0F9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30875B9D251E61B3001C0F9E /* Main.storyboard */; };
@@ -59,6 +61,8 @@
 		1D836BB14C279734DABF9170 /* Pods_OnTime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OnTime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		302454492557D4A50022294E /* ColorlessButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorlessButton.swift; sourceTree = "<group>"; };
 		3039C6A425C0A041005BA59E /* Olivs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Olivs-Info.plist"; sourceTree = "<group>"; };
+		3044ED7826A45FB4003DD89D /* UserInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoService.swift; sourceTree = "<group>"; };
+		3069DFD226A834D6001AC037 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		30875B94251E61B3001C0F9E /* OnTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30875B97251E61B3001C0F9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		30875B99251E61B3001C0F9E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 				30875BA0251E61B5001C0F9E /* Assets.xcassets */,
 				30875BA2251E61B5001C0F9E /* LaunchScreen.storyboard */,
 				30875BA5251E61B5001C0F9E /* Info.plist */,
+				3069DFD226A834D6001AC037 /* GoogleService-Info.plist */,
 			);
 			path = OnTime;
 			sourceTree = "<group>";
@@ -215,7 +220,6 @@
 				30E0367B251E717100ECD58A /* OurLogoAndInfo.swift */,
 				302454492557D4A50022294E /* ColorlessButton.swift */,
 				30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */,
-				30E178F825C595C70086DD47 /* DelegateNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,6 +232,7 @@
 				30E0368E251E729200ECD58A /* CheckInViewController.swift */,
 				30E0368F251E729200ECD58A /* RecordsViewController.swift */,
 				30E0368D251E729200ECD58A /* SettingsViewController.swift */,
+				30E178F825C595C70086DD47 /* DelegateNavigationController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -238,6 +243,7 @@
 				30E03650251E6CAB00ECD58A /* FilesListService.swift */,
 				30E03655251E6CCF00ECD58A /* LoginService.swift */,
 				30E0365A251E6CDF00ECD58A /* CheckInService.swift */,
+				3044ED7826A45FB4003DD89D /* UserInfoService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -283,6 +289,7 @@
 				30875B91251E61B3001C0F9E /* Frameworks */,
 				30875B92251E61B3001C0F9E /* Resources */,
 				AD925CD584E3B2E569D467BE /* [CP] Embed Pods Frameworks */,
+				3069DFD126A833E3001AC037 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -384,6 +391,7 @@
 				30E03684251E720000ECD58A /* OurLogoAndInfo.xib in Resources */,
 				30875BA1251E61B5001C0F9E /* Assets.xcassets in Resources */,
 				30875B9F251E61B3001C0F9E /* Main.storyboard in Resources */,
+				3069DFD326A834D6001AC037 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +433,25 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		3069DFD126A833E3001AC037 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		9895220B69B68B6E5E3A120B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -515,6 +542,7 @@
 				30E0367C251E717100ECD58A /* OurLogoAndInfo.swift in Sources */,
 				30E0364C251E6BEE00ECD58A /* CheckInInfo.swift in Sources */,
 				30875B98251E61B3001C0F9E /* AppDelegate.swift in Sources */,
+				3044ED7926A45FB4003DD89D /* UserInfoService.swift in Sources */,
 				30E03651251E6CAB00ECD58A /* FilesListService.swift in Sources */,
 				30E03644251E6BB200ECD58A /* SQLHelper.swift in Sources */,
 				30D4CEAC25AF4D750059D5F7 /* LoginTextField.swift in Sources */,
@@ -708,13 +736,15 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.1.3;
+				CURRENT_PROJECT_VERSION = 1.5;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.olivs.OnTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -732,13 +762,14 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.2.1.3;
+				CURRENT_PROJECT_VERSION = 1.5;
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.olivs.OnTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

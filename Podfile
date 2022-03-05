@@ -6,6 +6,10 @@ target 'OnTime' do
   use_frameworks!
 	pod 'Alamofire'
 	pod 'SwiftyJSON'
+	pod 'Firebase/Crashlytics'
+
+# Recommended: Add the Firebase pod for Google Analytics
+	pod 'Firebase/Analytics'
   # Pods for OnTime
 
   target 'OnTimeTests' do

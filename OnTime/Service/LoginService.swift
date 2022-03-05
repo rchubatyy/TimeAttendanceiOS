@@ -41,8 +41,9 @@ public private(set) var userToken: String
                 let data = JSON(response.value!)
                     UserDefaults.standard.set(true, forKey: "loggedIn")
                     let userToken = data["usrUserToken"].string ?? ""
-                    UserDefaults.standard.set(userToken, forKey: "userToken")
+                    //let userToken = "B5F34506E74244739B593B6BE33BBE3E"
                     UserDefaults.standard.set("\(data["usrFirstName"]) \(data["usrLastName"])",forKey: "name")
+                    UserDefaults.standard.set(userToken, forKey: "userToken")
                     UserDefaults.standard.set(email, forKey: "email")
                     self.userToken = userToken
                     completion(true, "\(data["usrFirstName"]) \(data["usrLastName"])" )

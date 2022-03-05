@@ -18,11 +18,25 @@ public class SQLHelper{
     
     func openDatabase(){
         var db: OpaquePointer?
+        var dbVersion: Int32 = 0
             let file_URL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("records.sqlite")
+        print(file_URL)
             if sqlite3_open(file_URL.path, &db) != SQLITE_OK {
                print("There's error in opening the database")
             }
-        let createQuery = """
+            else{
+                var stmt: OpaquePointer?
+                if(sqlite3_prepare_v2(db, "PRAGMA schema_version", -1, &stmt, nil) == SQLITE_OK) {
+                while(sqlite3_step(stmt) == SQLITE_ROW) {
+                    let databaseVersion = sqlite3_column_int(stmt, 0)
+                    dbVersion = databaseVersion
+                    print("Version is: \(databaseVersion)")
+                }
+        }
+            }
+        var createQuery: String = ""
+        if (dbVersion == 0){
+        createQuery = """
         CREATE TABLE IF NOT EXISTS tblRecords (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         usrToken VARCHAR(32),
@@ -32,23 +46,44 @@ public class SQLHelper{
         GPSlon DECIMAL (9,6),
         Site TEXT,
         Type TEXT,
+        QuestionID INTEGER,
+        Answer VARCHAR(1),
         isLiveData CHAR,
         resultID TEXT
         );
+        PRAGMA schema_version = 3;
+        
+        """}
+        else if (dbVersion == 1){
+            createQuery = """
+        ALTER TABLE tblRecords
+        ADD COLUMN QuestionID INTEGER DEFAULT 0;
+        ALTER TABLE tblRecords
+        ADD COLUMN Answer VARCHAR(1) DEFAULT 'X';
         """
+        }
+        if (createQuery != ""){
             if sqlite3_exec(db, createQuery, nil, nil, nil) == SQLITE_OK {
                 self.db = db
             }
                 else {
                let errorMsg = String(cString: sqlite3_errmsg(db)!)
                print("There's error creating the table: \(errorMsg)")
+                    if (errorMsg.contains("duplicate column name")){
+                        self.db=db
+                    }
+                }
         }
+        else{
+            self.db = db
+        }
+        
     }
     
     func insert(record: CheckInInfo){
         let insertStatementString = """
-        INSERT INTO tblRecords (usrToken, dbToken, RecordTime, GPSlat, GPSlon, Site, Type, isLiveData, resultID)
-        VALUES ('\(record.usrToken)', '\(record.dbToken)', '\(record.time!)', ?, ?, '\(record.site ?? "")', '\(record.checkInState!.rawValue)', ?,  ?);
+        INSERT INTO tblRecords (usrToken, dbToken, RecordTime, GPSlat, GPSlon, Site, Type, QuestionID, Answer, isLiveData, resultID)
+        VALUES ('\(record.usrToken)', '\(record.dbToken)', '\(record.time!)', ?, ?, '\(record.site ?? "")', '\(record.checkInState!.rawValue)', \(record.questionID ?? 0), '\(record.questionAnswer ?? "X")', ?,  ?);
         """
           var stmt: OpaquePointer?
           if sqlite3_prepare_v2(db, insertStatementString, -1, &stmt, nil) ==
@@ -71,7 +106,7 @@ public class SQLHelper{
     func getRecords(unsyncedOnly: Bool) -> [CheckInInfo] {
         var array = [CheckInInfo]()
         let queryStatementString = """
-        SELECT * FROM tblRecords
+        SELECT id, RecordTime, GPSlat, GPSlon, Site, Type, QuestionID, Answer, isLiveData, resultID FROM tblRecords
         WHERE usrToken = '\(FilesListService.instance.getUserToken())'
         AND dbToken = '\(FilesListService.instance.getDBToken())'
         \(unsyncedOnly ? "AND resultID = ''" : "")
@@ -84,11 +119,13 @@ public class SQLHelper{
         while sqlite3_step(queryStatement) == SQLITE_ROW {
             let data = CheckInInfo()
             data.id = sqlite3_column_int(queryStatement, 0)
-            data.time = String(cString: sqlite3_column_text(queryStatement, 3))
-            data.lat = sqlite3_column_double(queryStatement, 4)
-            data.lon = sqlite3_column_double(queryStatement, 5)
-            data.site = String(cString: sqlite3_column_text(queryStatement, 6))
-            data.checkInState = ActivityType(rawValue: String(cString: sqlite3_column_text(queryStatement, 7)))
+            data.time = String(cString: sqlite3_column_text(queryStatement, 1))
+            data.lat = sqlite3_column_double(queryStatement, 2)
+            data.lon = sqlite3_column_double(queryStatement, 3)
+            data.site = String(cString: sqlite3_column_text(queryStatement, 4))
+            data.checkInState = ActivityType(rawValue: String(cString: sqlite3_column_text(queryStatement, 5)))
+            data.questionID = Int(sqlite3_column_int(queryStatement, 6))
+            data.questionAnswer = (String(cString: sqlite3_column_text(queryStatement, 7)))
             data.isLiveData = sqlite3_column_int(queryStatement, 8) == 1
             data.resultId = (String(cString: sqlite3_column_text(queryStatement, 9)))
             array.append(data)
@@ -153,4 +190,7 @@ public class SQLHelper{
     }
     
     
+    
+    
 }
+

@@ -15,6 +15,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var registeredWith: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var websiteLink: UILabel!
+    @IBOutlet weak var nextReminderDate: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,24 @@ class SettingsViewController: UIViewController {
         yourLogin.text = "Your login: " + (UserDefaults.standard.string(forKey: "email") ?? "none")
         registeredWith.text = "Registered with: \n" + (UserDefaults.standard.string(forKey: "businessFileName") ?? "none")
         errorMessage.text = ""
+        if let rosterReminderData = UserInfoService.instance.rosterReminderData{
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = "dd MMM yyyy HH:mm"
+            let dateParsed = inputFormatter.date(from: rosterReminderData)
+            inputFormatter.dateFormat = "dd-MM HH:mm"
+            if let dateParsedUnwrapped = dateParsed {
+                let dateTime = inputFormatter.string(from: dateParsedUnwrapped)
+                nextReminderDate.isHidden = false
+                nextReminderDate.text = "Next Reminder Date: \n\(dateTime)"
+            }
+            else{
+                nextReminderDate.isHidden = true
+            }
+            
+        }
+        else{
+            nextReminderDate.isHidden = true
+        }
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewWebsite))
         websiteLink.addGestureRecognizer(tap)
     }
@@ -90,7 +109,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func viewWebsite(sender: UITapGestureRecognizer){
-        if let url = URL(string: "https://know.olivs.app/time-attendance/mobile-app/") {
+        if let url = URL(string: HELP_WEBSITE) {
             UIApplication.shared.open(url)
         }
     }

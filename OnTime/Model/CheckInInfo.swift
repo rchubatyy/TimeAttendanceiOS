@@ -16,6 +16,8 @@ class CheckInInfo{
     public var lon: Double?
     public var site: String?
     public var checkInState: ActivityType?
+    public var questionID: Int?
+    public var questionAnswer: String?
     public var isLiveData: Bool? //true for LiveData, false for Sync
     public var resultId: String?
     
@@ -35,6 +37,8 @@ class CheckInInfo{
         self.time = time?.replacingOccurrences(of: "/", with: "-")
         self.lat = body["GPSLat"] as? Double
         self.lon = body["GPSLon"] as? Double
+        self.questionID = body["QuestionID"] as? Int
+        self.questionAnswer = body["Answer"] as? String
     }
     
 
