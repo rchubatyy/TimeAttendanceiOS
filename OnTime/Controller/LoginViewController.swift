@@ -17,6 +17,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var forgotPasswordLink: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var privacyPolicyLink: UILabel!
     @IBOutlet weak var learnMoreAndRegisterLink: UILabel!
     @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var logoSize: NSLayoutConstraint!

@@ -14,6 +14,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var yourLogin: UILabel!
     @IBOutlet weak var registeredWith: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var privacyPolicyLink: UILabel!
     @IBOutlet weak var websiteLink: UILabel!
     @IBOutlet weak var nextReminderDate: UILabel!
     

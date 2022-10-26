@@ -129,7 +129,7 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         self.getUserInfo()
         let states: [Int: ActivityType] = [1: .CHECKIN, 2: .BREAKSTART, 3: .BREAKEND, 4: .CHECKOUT]
         self.state = states[sender.tag]!
-        if let questionId = userInfoService.questionIds[state!], let q = userInfoService.questions[state!], let question = q, question != ""{
+       /* if let questionId = userInfoService.questionIds[state!], let q = userInfoService.questions[state!], let question = q, question != ""{
             self.questionId = questionId
             let alert = UIAlertController(title: question, message: nil, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default) { action in
@@ -148,7 +148,8 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         else{
             self.questionAnswer = "X"
             self.startUploadingData()
-        }
+        }*/
+        self.startUploadingData()
         
     }
     

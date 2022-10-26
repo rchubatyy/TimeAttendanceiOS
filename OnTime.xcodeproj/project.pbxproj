@@ -736,7 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 2.0.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
@@ -762,7 +762,7 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.5;
+				CURRENT_PROJECT_VERSION = 2.0.1;
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

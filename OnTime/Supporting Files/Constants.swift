@@ -24,6 +24,7 @@ let REGISTER_USER_ACTIVITY = BASE_URL_V2 + "register-user-activity-v2"
 let FORGOT_PASSWORD_LINK = "https://s1.olivs.app/0/en-au/olivs/forgot-user-login-password"
 let REGISTER_LINK = "https://olivs.app/ontime"
 let HELP_WEBSITE = "https://help.olivs.app/ontime/"
+let PRIVACY_POLICY_WEBSITE = "https://olivs.app/privacy-policy/"
 
 private var apiKey: String {
   get {
