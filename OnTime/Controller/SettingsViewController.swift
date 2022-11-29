@@ -17,6 +17,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var privacyPolicyLink: UILabel!
     @IBOutlet weak var websiteLink: UILabel!
     @IBOutlet weak var nextReminderDate: UILabel!
+    @IBOutlet weak var version: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,10 @@ class SettingsViewController: UIViewController {
         }
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewWebsite))
         websiteLink.addGestureRecognizer(tap)
+        let privacyPolicyTap = UITapGestureRecognizer(target: self, action: #selector(toPrivacyPolicy))
+        privacyPolicyLink.addGestureRecognizer(privacyPolicyTap)
+        version.text = "Version: " + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)
+        
     }
     
     
@@ -111,6 +116,12 @@ class SettingsViewController: UIViewController {
     
     @objc func viewWebsite(sender: UITapGestureRecognizer){
         if let url = URL(string: HELP_WEBSITE) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc func toPrivacyPolicy(sender: UITapGestureRecognizer){
+        if let url = URL(string: PRIVACY_POLICY_WEBSITE) {
             UIApplication.shared.open(url)
         }
     }

@@ -37,6 +37,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         forgotPasswordLink.addGestureRecognizer(forgotTap)
         let registerTap = UITapGestureRecognizer(target: self, action: #selector(toLearnMoreAndRegister))
         learnMoreAndRegisterLink.addGestureRecognizer(registerTap)
+        let privacyPolicyTap = UITapGestureRecognizer(target: self, action: #selector(toPrivacyPolicy))
+        privacyPolicyLink.addGestureRecognizer(privacyPolicyTap)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -134,6 +136,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     
     @objc func toLearnMoreAndRegister(sender: UITapGestureRecognizer){
         if let url = URL(string: REGISTER_LINK) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc func toPrivacyPolicy(sender: UITapGestureRecognizer){
+        if let url = URL(string: PRIVACY_POLICY_WEBSITE) {
             UIApplication.shared.open(url)
         }
     }
