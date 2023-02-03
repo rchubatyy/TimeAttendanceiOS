@@ -97,11 +97,9 @@ class BusinessFileViewController: UIViewController, UITableViewDelegate, UITable
                 self.okButton.isEnabled = false
             }
             else{
+                LoginService.instance.logout()
                 let alertController = UIAlertController(title: error, message: nil, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Return", style: .default, handler: {_ in
-                    if !UserDefaults.standard.bool(forKey: "dbSelected"){
-                        LoginService.instance.logout()
-                    }
                     self.dismiss(animated: true)
                 }))
                 self.present(alertController, animated: true)

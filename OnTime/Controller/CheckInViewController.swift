@@ -52,9 +52,6 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
         locationManager.distanceFilter = 1
         locationManager.activityType = .fitness
         locationManager.requestWhenInUseAuthorization()
-        if (CLLocationManager.locationServicesEnabled()){
-            showCanGetLocation()
-        }
         let notc = NotificationCenter.default
             notc.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notc.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -83,6 +80,16 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         resultsMessage.text = "Failed to get location. \(error.localizedDescription)"
+    }
+    
+    
+    func locationManagerDidChangeAuthorization(){
+        if (CLLocationManager.locationServicesEnabled()){
+            showCanGetLocation()
+        }
+        else{
+            showCannotGetLocation()
+        }
     }
     
     
@@ -199,14 +206,29 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
     FilesListService.instance.getCompanyInformation(){ (success, message) in
         self.infoShown = success
         if !success{
-            self.companyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+             if !UserDefaults.standard.bool(forKey: "dbSelected"){
+                 FilesListService.instance.removeFiles()
+                 LoginService.instance.logout()
+             }
+             let alertController = UIAlertController(title: message?.string, message: nil, preferredStyle: .alert)
+             alertController.addAction(UIAlertAction(title: "Return", style: .default, handler: {_ in
+                 self.logout()
+             }))
+             self.present(alertController, animated: true)
+             
         }
         else{
-            self.companyMessage.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            if let isLater = message?.string.hasSuffix("later."){
+                self.companyMessage.textColor = isLater ? #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            }
+            else{
+                self.companyMessage.textColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1)
+            }
         }
         self.companyMessage.attributedText = message
     }
     }
+    /**/
     
     @objc func refreshCompanyInfo() {
         setButtonsEnabled(false)
@@ -288,6 +310,27 @@ class CheckInViewController: UIViewController, CLLocationManagerDelegate, Change
                 //self.getUserInfo()
             }
         }
+    }
+    
+    private func logout(){
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let vc = storyboard.instantiateViewController(withIdentifier: "LoginVC") as!
+                LoginViewController
+            let nav = UINavigationController(rootViewController: vc)
+            nav.isNavigationBarHidden = true
+        if #available(iOS 13.0, *) {
+            let delegate = self.view.window?.windowScene?.delegate as? SceneDelegate
+
+            delegate?.window?.rootViewController = nav
+            delegate?.window?.makeKeyAndVisible()
+            delegate?.window?.overrideUserInterfaceStyle = .dark
+        }
+        else{
+            let delegate = UIApplication.shared.delegate as? AppDelegate
+            delegate?.window?.rootViewController = nav
+            delegate?.window?.makeKeyAndVisible()
+        }
+        dismiss(animated: true)
     }
     
 }

@@ -76,13 +76,32 @@ class FilesListService{
             let companyInfo = styledHTML.htmlToAttributedString //.replacingOccurrences(of: "\n", with: "")
                 completion(true, companyInfo)
         }
-        else {
-            self.retrieveSavedFiles()
-            guard let data = response.value else{
-                completion(false, NSAttributedString(string: "Failed to retrive company informations. Try it later."))
-                return
+            else if (response.response?.statusCode == 500){
+                if let data = response.value as? NSAttributedString?{
+                    completion(false, data)
+                }
+                else if let data = response.value as? String{
+                    completion(false, NSAttributedString(string:data))
+                }
+                else{
+                    completion(false, NSAttributedString(string: "Failed to retrive company information."))
+                }
             }
-            completion(false, data as! NSAttributedString?)
+            else {
+            self.retrieveSavedFiles()
+            //guard let data = response.value else{
+                completion(true, NSAttributedString(string: "Failed to retrive company information. Try it later."))
+                //return
+            //}
+            /*if let data = data as? NSAttributedString?{
+                completion(false, data)
+            }
+            else if let data = data as? String{
+                completion(false, NSAttributedString(string:data))
+            }
+            else {
+                completion(false, NSAttributedString(string: "Failed to retrive company information."))
+            }*/
             }
         }
     }
@@ -108,6 +127,12 @@ class FilesListService{
         }
         UserDefaults.standard.set(names, forKey: "businessFileNames")
         UserDefaults.standard.set(tokens, forKey: "businessFileTokens")
+    }
+    
+    func removeFiles(){
+        UserDefaults.standard.set(false,forKey: "dbSelected")
+        UserDefaults.standard.set("",forKey: "dbToken")
+        UserDefaults.standard.set("",forKey: "businessFile")
     }
     
     func retrieveSavedFiles(){

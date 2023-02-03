@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,6 +19,7 @@
 		30875BAF251E61B6001C0F9E /* OnTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875BAE251E61B6001C0F9E /* OnTimeTests.swift */; };
 		30875BBA251E61B6001C0F9E /* OnTimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30875BB9251E61B6001C0F9E /* OnTimeUITests.swift */; };
 		30D4CEAC25AF4D750059D5F7 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D4CEAB25AF4D750059D5F7 /* LoginTextField.swift */; };
+		30D4D55B29890C270098421A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 30D4D55A29890C270098421A /* FirebaseCrashlytics */; };
 		30E03639251E62CB00ECD58A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E03638251E62BE00ECD58A /* libsqlite3.tbd */; };
 		30E03644251E6BB200ECD58A /* SQLHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E03643251E6BB200ECD58A /* SQLHelper.swift */; };
 		30E0364C251E6BEE00ECD58A /* CheckInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E0364B251E6BEE00ECD58A /* CheckInInfo.swift */; };
@@ -108,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30D4D55B29890C270098421A /* FirebaseCrashlytics in Frameworks */,
 				30E03639251E62CB00ECD58A /* libsqlite3.tbd in Frameworks */,
 				E0D9A478D1EF01687247CA3E /* Pods_OnTime.framework in Frameworks */,
 			);
@@ -296,6 +298,9 @@
 			dependencies = (
 			);
 			name = OnTime;
+			packageProductDependencies = (
+				30D4D55A29890C270098421A /* FirebaseCrashlytics */,
+			);
 			productName = OnTime;
 			productReference = 30875B94251E61B3001C0F9E /* OnTime.app */;
 			productType = "com.apple.product-type.application";
@@ -370,6 +375,9 @@
 				Base,
 			);
 			mainGroup = 30875B8B251E61B3001C0F9E;
+			packageReferences = (
+				30D4D55929890C270098421A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 30875B95251E61B3001C0F9E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -451,7 +459,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		9895220B69B68B6E5E3A120B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -736,7 +744,7 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 1.0.2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
@@ -763,7 +771,7 @@
 				CODE_SIGN_ENTITLEMENTS = OnTime/OnTime.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0;
+				CURRENT_PROJECT_VERSION = 1.0.2;
 				DEVELOPMENT_TEAM = L5Q7CW5F4C;
 				INFOPLIST_FILE = OnTime/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
@@ -908,6 +916,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		30D4D55929890C270098421A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		30D4D55A29890C270098421A /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30D4D55929890C270098421A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 30875B8C251E61B3001C0F9E /* Project object */;
 }

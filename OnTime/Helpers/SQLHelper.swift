@@ -83,7 +83,7 @@ public class SQLHelper{
     func insert(record: CheckInInfo){
         let insertStatementString = """
         INSERT INTO tblRecords (usrToken, dbToken, RecordTime, GPSlat, GPSlon, Site, Type, QuestionID, Answer, isLiveData, resultID)
-        VALUES ('\(record.usrToken)', '\(record.dbToken)', '\(record.time!)', ?, ?, '\(record.site ?? "")', '\(record.checkInState!.rawValue)', \(record.questionID ?? 0), '\(record.questionAnswer ?? "X")', ?,  ?);
+        VALUES ('\(record.usrToken)', '\(record.dbToken)', '\(record.time!)', ?, ?, '\(record.site ?? "")', '\(record.checkInState!.rawValue)', \(record.questionID ?? 0), '\(record.questionAnswer ?? "X")', ?, '\(record.resultId!)' );
         """
           var stmt: OpaquePointer?
           if sqlite3_prepare_v2(db, insertStatementString, -1, &stmt, nil) ==
@@ -91,7 +91,7 @@ public class SQLHelper{
             sqlite3_bind_double(stmt, 1, record.lat!)
             sqlite3_bind_double(stmt, 2, record.lon!)
             sqlite3_bind_int(stmt, 3, record.isLiveData! ? 1 : 0)
-            sqlite3_bind_text(stmt, 4, record.resultId, -1, nil)
+            //sqlite3_bind_text(stmt, 4, record.resultId, -1, nil)
             if sqlite3_step(stmt) == SQLITE_DONE {
             } else {
               print("\nCould not insert row.")
